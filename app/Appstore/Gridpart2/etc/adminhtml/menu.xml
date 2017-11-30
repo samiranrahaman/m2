@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+        <add id="Appstore_Gridpart2::gridpart2" title="Appstore" module="Appstore_Gridpart2" sortOrder="12" dependsOnModule="Appstore_Gridpart2" resource="Appstore_Gridpart2::gridpart2"/>
+        <add id="Appstore_Gridpart2::gridpart2_system" title="Appstore" module="Appstore_Gridpart2" sortOrder="12" parent="Appstore_Gridpart2::gridpart2" resource="Appstore_Gridpart2::gridpart2_system" />
+        <add id="Appstore_Gridpart2::gridpart2_template" title="Manage App" module="Appstore_Gridpart2" sortOrder="12" parent="Appstore_Gridpart2::gridpart2_system" action="gridpart2/template" resource="Appstore_Gridpart2::gridpart2_template"/>
+		<!--<add id="Appstore_Gridpart2::gridpart2_category" title="Manage App Category" module="Appstore_Gridpart2" sortOrder="10" parent="Appstore_Gridpart2::gridpart2_system" action="gridpart2/category" resource="Appstore_Gridpart2::gridpart2_category"/>-->
+    </menu>
+</config>
+

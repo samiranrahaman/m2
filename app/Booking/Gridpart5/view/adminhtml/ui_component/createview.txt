@@ -1,0 +1,3 @@
+CREATE VIEW booking_view1 AS ( select a.entity_id ,a.status ,a.store_name,a.customer_id,a.base_grand_total,a.grand_total,a.increment_id, a.shipping_name,a.billing_name,a.billing_address,a.shipping_address,a.customer_email,b.items_count ,b.subtotal,b.base_subtotal,b.subtotal_with_discount,b.base_subtotal_with_discount ,c.name ,c.row_total,c.base_row_total ,c.booking_date ,c.booking_day ,c.booking_slot_time from sales_order_grid a,quote b,quote_item c 
+where a.increment_id=b.reserved_order_id and 
+b.entity_id=c.quote_id);

@@ -1,0 +1,447 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_Chharo
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Custom\Chharo\Api\Data\BannerimageInterface" 
+                type="Custom\Chharo\Model\Bannerimage" />
+    <preference for="Custom\Chharo\Api\BannerimageRepositoryInterface" 
+                type="Custom\Chharo\Model\BannerimageRepository" />
+
+    <preference for="Custom\Chharo\Api\Data\NotificationInterface" 
+                type="Custom\Chharo\Model\Notification" />
+    <preference for="Custom\Chharo\Api\NotificationRepositoryInterface" 
+                type="Custom\Chharo\Model\NotificationRepository" />
+
+    <preference for="Custom\Chharo\Api\Data\FeaturedcategoriesInterface" 
+                type="Custom\Chharo\Model\Featuredcategories" />
+    <preference for="Custom\Chharo\Api\FeaturedcategoriesRepositoryInterface" 
+                type="Custom\Chharo\Model\FeaturedcategoriesRepository" />
+
+    <preference for="Custom\Chharo\Api\Data\CategoryimagesInterface" 
+                type="Custom\Chharo\Model\Categoryimages" />
+    <preference for="Custom\Chharo\Api\CategoryimagesRepositoryInterface" 
+                type="Custom\Chharo\Model\CategoryimagesRepository" />
+    <preference for="Magento\Catalog\Model\Layer\ContextInterface" 
+                type="Magento\Catalog\Model\Layer\Context" />
+    <preference for="Magento\Catalog\Model\Layer\ItemCollectionProviderInterface" 
+                type="Magento\Catalog\Model\Layer\Category\ItemCollectionProvider" />
+    <preference for="Magento\Catalog\Model\Layer\StateKeyInterface" 
+                type="Magento\Catalog\Model\Layer\Category\StateKey" />
+
+    <preference for="Magento\Catalog\Model\Layer\CollectionFilterInterface" 
+                type="Magento\Catalog\Model\Layer\Category\CollectionFilter" />
+
+    <preference for="Magento\Paypal\Model\Express" 
+                type="Custom\Chharo\Model\Express" />
+
+    <type name="Custom\Chharo\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Custom\Chharo\Logger\ChharoLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">chharo</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Custom\Chharo\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Model\ApiSession">
+        <arguments>
+            <argument name="storage" xsi:type="object">Custom\Chharo\Model\ApiSession\Storage</argument>
+        </arguments>
+    </type>
+                
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="chharo_bannerimage_list_data_source" xsi:type="string">Custom\Chharo\Model\ResourceModel\Bannerimage\Grid\Collection</item>
+                <item name="chharo_notification_list_data_source" xsi:type="string">Custom\Chharo\Model\ResourceModel\Notification\Grid\Collection</item>
+                <item name="chharo_featuredcategories_list_data_source" xsi:type="string">Custom\Chharo\Model\ResourceModel\Featuredcategories\Grid\Collection</item>
+                <item name="chharo_userimage_list_data_source" xsi:type="string">Custom\Chharo\Model\ResourceModel\Userimage\Grid\Collection</item>
+                <item name="chharo_categoryimages_list_data_source" xsi:type="string">Custom\Chharo\Model\ResourceModel\Categoryimages\Grid\Collection</item>
+                <item name="chharo_devicetoken_list_data_source" xsi:type="string">Custom\Chharo\Model\ResourceModel\Devicetoken\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Model\ResourceModel\Bannerimage\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">chharo_bannerimage</argument>
+            <argument name="eventPrefix" xsi:type="string">chharo_bannerimage_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">bannerimage_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Custom\Chharo\Model\ResourceModel\Bannerimage</argument>
+        </arguments>
+    </type>
+    <type name="Custom\Chharo\Model\ResourceModel\Notification\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">chharo_notification</argument>
+            <argument name="eventPrefix" xsi:type="string">chharo_notification_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">notification_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Custom\Chharo\Model\ResourceModel\Notification</argument>
+        </arguments>
+    </type>
+    <type name="Custom\Chharo\Model\ResourceModel\Featuredcategories\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">chharo_featuredcategories</argument>
+            <argument name="eventPrefix" xsi:type="string">chharo_featuredcategories_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">featuredcategories_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Custom\Chharo\Model\ResourceModel\Featuredcategories</argument>
+        </arguments>
+    </type>
+    <type name="Custom\Chharo\Model\ResourceModel\Userimage\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">chharo_userimage</argument>
+            <argument name="eventPrefix" xsi:type="string">chharo_userimage_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">userimage_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Custom\Chharo\Model\ResourceModel\Userimage</argument>
+        </arguments>
+    </type>
+    <type name="Custom\Chharo\Model\ResourceModel\Categoryimages\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">chharo_categoryimages</argument>
+            <argument name="eventPrefix" xsi:type="string">chharo_categoryimages_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">categoryimages_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Custom\Chharo\Model\ResourceModel\Categoryimages</argument>
+        </arguments>
+    </type>
+    <type name="Custom\Chharo\Model\ResourceModel\Devicetoken\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">chharo_devicetoken</argument>
+            <argument name="eventPrefix" xsi:type="string">chharo_devicetoken_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">devicetoken_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Custom\Chharo\Model\ResourceModel\Devicetoken</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="ChharoGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BannerimageGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Custom\Chharo\Model\ResourceModel\Bannerimage\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ChharoGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="NotificationGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Custom\Chharo\Model\ResourceModel\Notification\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ChharoGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="FeaturedcategoriesGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Custom\Chharo\Model\ResourceModel\Featuredcategories\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ChharoGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="UserimageGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Custom\Chharo\Model\ResourceModel\Userimage\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ChharoGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CategoryimagesGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Custom\Chharo\Model\ResourceModel\Categoryimages\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ChharoGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="DevicetokenGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Custom\Chharo\Model\ResourceModel\Devicetoken\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">ChharoGirdFilterPool</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Custom\Chharo\Controller\Catalog\GetCategoryList">
+        <arguments>
+            <argument name="categoryTree" xsi:type="object">Magento\Catalog\Model\Category\Tree\Proxy</argument>
+            <argument name="attributeRepository" xsi:type="object">Magento\Catalog\Model\Category\AttributeRepository\Proxy</argument>
+            <argument name="productVisibility" xsi:type="object">Magento\Catalog\Model\Product\Visibility\Proxy</argument>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Catalog\GetCatalogSearchResult">
+        <arguments>
+            <argument name="fullText" xsi:type="object">Magento\CatalogSearch\Model\Fulltext\Proxy</argument>
+            <argument name="productVisibility" xsi:type="object">Magento\Catalog\Model\Product\Visibility\Proxy</argument>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Catalog\GetProductDetails">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Catalog\AddToWishlist">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="dir" xsi:type="object">Magento\Framework\Filesystem\DirectoryList\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Catalog\GetCategoryProductList">
+        <arguments>
+            <argument name="categoryTree" xsi:type="object">Magento\Catalog\Model\Category\Tree\Proxy</argument>
+            <argument name="productVisibility" xsi:type="object">Magento\Catalog\Model\Product\Visibility\Proxy</argument>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="eavConfig" xsi:type="object">Magento\Eav\Model\Config\Proxy</argument>
+            <argument name="filterableAttributes" xsi:type="object">Magento\Catalog\Model\Layer\Category\FilterableAttributeList\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\AddToCart">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+
+    <type name="Custom\Chharo\Controller\Checkout\ApplyCoupon">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\ChangeOrderStatus">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\EmptyCart">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\GetCartDetails">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\GetOrderReviewData">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\GetStepOnenTwoData">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\GetStepThreenFourData">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\RemoveCartItem">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\SaveOrder">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\UpdateCart">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Checkout\WishlistFromCart">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="stockRegistry" xsi:type="object">Magento\CatalogInventory\Api\StockRegistryInterface\Proxy</argument>
+            <argument name="customerRepository" xsi:type="object">Magento\Customer\Api\CustomerRepositoryInterface\Proxy</argument>
+            <argument name="country" xsi:type="object">Magento\Directory\Model\Country\Proxy</argument>
+            <argument name="transactionBuilder" xsi:type="object">Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface\Proxy</argument>
+            <argument name="invoiceSender" xsi:type="object">Magento\Sales\Model\Order\Email\Sender\InvoiceSender\Proxy</argument>
+            <argument name="storeManager" xsi:type="object">Magento\Store\Model\StoreManagerInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Customer\AddressDelete">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="addressRepository" xsi:type="object">Magento\Customer\Api\AddressRepositoryInterface\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Customer\AddressFormData">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+        </arguments>
+    </type>
+
+    <type name="Custom\Chharo\Controller\Customer\CreatePost">
+        <arguments>
+            <argument name="helperCatalog" xsi:type="object">Custom\Chharo\Helper\Catalog\Proxy</argument>
+            <argument name="helper" xsi:type="object">Custom\Chharo\Helper\Data\Proxy</argument>
+            <argument name="emulate" xsi:type="object">Magento\Store\Model\App\Emulation\Proxy</argument>
+            <argument name="accountManagement" xsi:type="object">Magento\Customer\Api\AccountManagementInterface\Proxy</argument>
+            <argument name="customerExtractor" xsi:type="object">Magento\Customer\Model\CustomerExtractor\Proxy</argument>
+        </arguments>
+    </type>
+
+
+
+
+</config>

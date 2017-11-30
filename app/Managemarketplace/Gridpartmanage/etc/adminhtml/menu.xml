@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+        <add id="Managemarketplace_Gridpartmanage::Gridpartmanage" title="Marketplace Enable/Disable" module="Managemarketplace_Gridpartmanage" sortOrder="13" dependsOnModule="Managemarketplace_Gridpartmanage" resource="Managemarketplace_Gridpartmanage::Gridpartmanage"/>
+        <add id="Managemarketplace_Gridpartmanage::gridpart2_system" title="Marketplace" module="Managemarketplace_Gridpartmanage" sortOrder="10" parent="Managemarketplace_Gridpartmanage::Gridpartmanage" resource="Managemarketplace_Gridpartmanage::gridpart4_system" />
+        <add id="Managemarketplace_Gridpartmanage::gridpartmanage_template" title="Manage Marketplace" module="Managemarketplace_Gridpartmanage" sortOrder="10" parent="Managemarketplace_Gridpartmanage::gridpart2_system" action="Gridpartmanage/template" resource="Managemarketplace_Gridpartmanage::gridpartmanage_template"/>
+		
+    </menu>
+</config>
+

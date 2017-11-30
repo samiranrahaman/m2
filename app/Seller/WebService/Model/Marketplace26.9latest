@@ -1,0 +1,508 @@
+<?php
+
+/**
+ * Copyright 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+namespace Seller\WebService\Model;
+
+use Seller\WebService\Api\MarketplaceInterface;
+use Magento\Customer\Controller\Account;
+use Magento\Customer\Controller\AbstractAccount;
+
+/**
+ * Defines the implementaiton class of the calculator service contract.
+ */
+class Marketplace implements MarketplaceInterface 
+  {
+	  /**
+     * @var \Magento\Store\Model\StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var \Magento\Customer\Model\CustomerFactory
+     */
+    protected $customerFactory;
+
+    /**
+     * @param \Magento\Framework\App\Action\Context      $context
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Customer\Model\CustomerFactory    $customerFactory
+     */
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
+    ) {
+        $this->storeManager     = $storeManager;
+        $this->customerFactory  = $customerFactory;
+
+       // parent::__construct($context);
+    }
+  /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+     * @param int $num2 Right hand operand.
+     * @return array()|associativeArray().
+     */
+    public function getsellerprofile($sellerid) {
+      if(empty($sellerid) || !isset($sellerid) || $sellerid == ""){
+		 throw new InputException(__('Id required'));
+		}
+		else{
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$tableName = $resource->getTableName('employee'); //gives table name with prefix
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"));
+		//Select Data from table
+		$sql = "Select * FROM marketplace_userdata where seller_id=$sellerid";
+		$result1 = $connection->fetchAll($sql);
+		$result[]=array('profile'=>$result1);
+		//array_push($result,$result2); 
+		return $result;     
+		 
+    }
+	 }
+	 
+	 
+	/**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+    
+     * @return array()|associativeArray().
+     */
+    public function getproductlistofseller($sellerid) {	
+      if(empty($sellerid) || !isset($sellerid) || $sellerid == ""){
+		 throw new InputException(__('Id required')); 	
+		}
+		else{	
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		//$tableName = $resource->getTableName('employee'); //gives table name with prefix
+		 
+		//Select Data from table
+		$sql3 = "Select * FROM marketplace_product where seller_id=$sellerid";
+		$result3 = $connection->fetchAll($sql3);
+		//$result['status']=array("code"=>"1","message"=>"sucess","seller_id"=>"2");
+		$result4='';
+		
+		//$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>array(array('id'=>1,'img'=>'"http://btranz.website/banner-image.png'),array('id'=>2,'img'=>'"http://btranz.website/141961_20160310_HPOasis_A1.jpg')));
+		
+		foreach($result3 as $data)
+		{
+			     //echo $data['mageproduct_id']; 
+			       $productId =$data['mageproduct_id'];
+				   $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+					//  print_r($currentproduct);
+					/* $result4[]['name']=$currentproduct->getName(); 
+					$result4[]['description']=$currentproduct->getDescription(); 
+					$result4[]['price']=$currentproduct->getPrice();
+					$result4[]['finalPrice']=$currentproduct->getFinalPrice();
+					$result4[]['thumbnail']='http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail(); */
+					
+					$result4[]=array("id"=>$currentproduct->getId(),"name"=>$currentproduct->getName(),"description"=>$currentproduct->getDescription(),"price"=>$currentproduct->getPrice(),"finalPrice"=>$currentproduct->getFinalPrice(),"thumbnail"=>'http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail());
+					
+			
+		}
+		  
+		//$result['product']=$result4;
+		
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'product'=>$result4);
+		
+		return $result;   
+		
+    }
+	 } 
+	 
+	 
+	  /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+     * @param int $num2 Right hand operand.
+     * @return array()|associativeArray().
+     */
+    public function getofferbanner() {
+     
+		//$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>array(array('id'=>1,'img'=>'"https://www.demo.yo-kart.com/image/slide/141961_20160310_HPOasis_A1.jpg'),array('id'=>1,'img'=>'"https://www.demo.yo-kart.com/image/slide/141961_20160310_HPOasis_A1.jpg')));
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>array(array('id'=>1,'img'=>'https://d152j5tfobgaot.cloudfront.net/wp-content/uploads/2015/09/yourstory-e-commerce1.jpg'),array('id'=>2,'img'=>'http://www.ecouponswala.in/wp-content/uploads/2014/10/Freecultr-Diwali-Offer-600x260.png')));
+		
+		//$result[]['offersbanners']=array('id'=>1,'img'=>'"https://www.demo.yo-kart.com/image/slide/141961_20160310_HPOasis_A1.jpg');
+		//$result1[]=array('id'=>2,'img'=>'"https://www.demo.yo-kart.com/image/slide/141961_20160310_HPOasis_A1.jpg');
+		
+		//$result[]=array('offersbanners'=>$result1);  
+
+		//array_push($result,$result2); 
+		//$output=json_decode(json_encode($result));
+		return $result;      
+
+	 }
+	 
+	  /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+     * @param int $num2 Right hand operand.
+     * @return array()|associativeArray().
+     */
+    public function getbrandlist() {			
+       
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'brandlist'=>array(array('id'=>1,'img'=>'http://btranz.website/fitness_logo4.jpg'),array('id'=>2,'img'=>'http://btranz.website/fitness_logo5.jpg')));
+		
+		
+		return $result;     
+		 
+   // }
+	 }
+	 
+	 
+	 
+	 /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+    
+     * @return array()|associativeArray().
+     */
+    public function gettopproductselling($sellerid) {	
+       if(empty($sellerid) || !isset($sellerid) || $sellerid == ""){
+		 throw new InputException(__('Id required')); 	
+		}
+		else{	
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		//$tableName = $resource->getTableName('employee'); //gives table name with prefix
+		 
+		//Select Data from table
+		$sql3 = "Select * FROM marketplace_product where seller_id=$sellerid";
+		$result3 = $connection->fetchAll($sql3);
+		//$result['status']=array("code"=>"1","message"=>"sucess","seller_id"=>"2");
+		$result4='';
+		
+		//$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>array(array('id'=>1,'img'=>'"http://btranz.website/banner-image.png'),array('id'=>2,'img'=>'"http://btranz.website/141961_20160310_HPOasis_A1.jpg')));
+		
+		foreach($result3 as $data)
+		{
+			     //echo $data['mageproduct_id']; 
+			       $productId =$data['mageproduct_id'];
+				   $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+					//  print_r($currentproduct);
+					/* $result4[]['name']=$currentproduct->getName(); 
+					$result4[]['description']=$currentproduct->getDescription(); 
+					$result4[]['price']=$currentproduct->getPrice();
+					$result4[]['finalPrice']=$currentproduct->getFinalPrice();
+					$result4[]['thumbnail']='http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail(); */
+					
+					$result4[]=array("id"=>$currentproduct->getId(),"name"=>$currentproduct->getName(),"description"=>$currentproduct->getDescription(),"price"=>$currentproduct->getPrice(),"finalPrice"=>$currentproduct->getFinalPrice(),"thumbnail"=>'http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail());
+					
+			
+		}
+		  
+		//$result['product']=$result4;
+		
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'product'=>$result4);
+		
+		return $result;   
+		
+    }
+	 } 
+	 
+	 
+	 
+	 /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+   
+	 * @return array()|associativeArray().
+     */
+    public function getproductcategories($sellerid) {	
+      if(empty($sellerid) || !isset($sellerid) || $sellerid == ""){
+		 throw new InputException(__('Id required')); 	
+		}
+		else{	
+		/* $result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"));
+		$result4[]='';
+		 $objectManagerr = \Magento\Framework\App\ObjectManager::getInstance();
+                    $categoryFactory = $objectManagerr->create('Magento\Catalog\Model\ResourceModel\Category\CollectionFactory');
+
+                     $categories = $categoryFactory->create()                              
+                                ->addAttributeToSelect('*');  
+		//print_r($categories->getData()); 
+		 foreach($categories  as $data)
+		{ 
+		
+		$result4[]['name']=$data->getName(); 
+				 $result4[]['id']=$data->getId();
+			 
+		}		
+		  
+		$result[]=array('getproductcategories'=>$result4); */ 
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$sql3 = "Select * FROM (Select * FROM marketplace_product a ,catalog_category_product b where a.seller_id=2 and b.product_id=a.mageproduct_id  group by b.category_id) s ,catalog_category_entity c where c.entity_id=s.category_id";
+		$result3 = $connection->fetchAll($sql3);
+		$result4='';
+		foreach($result3 as $data)
+		{
+			if($data['parent_id']==2)
+			{
+				$categoryId = $data['entity_id'];
+			$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+			$object_manager = $_objectManager->create('Magento\Catalog\Model\Category')
+			->load($categoryId);
+			
+			$subcats  =$object_manager->getChildren();
+			$subcategories = array();
+			//print_r($subcats);
+			 foreach(explode(',',$subcats) as $subCatid){
+				// $objectManagerr = \Magento\Framework\App\ObjectManager::getInstance();
+                 //   $categoryFactory = $objectManagerr->create('Magento\Catalog\Model\ResourceModel\Category\CollectionFactory');
+                $_subCategory = $_objectManager->create('Magento\Catalog\Model\Category')->load($subCatid);
+						   if($_subCategory->getIsActive()) {
+					$subcategories[] = array('id'=>$_subCategory->getId(),'name'=>$_subCategory->getName(),'image_url'=>$_subCategory->getImageUrl()); 
+				}
+			}
+			//print_r($subcategories);
+			
+				$result4[]=array('category_id'=>$data['entity_id'],'category_name'=>$object_manager->getName(),'sub_category'=>$subcategories);  
+			}
+			
+		}
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'getproductcategories'=>$result4);
+		 
+		
+		return $result;   
+		
+    }
+	 } 
+	 
+	 
+		/**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $sellerid Left hand operand.
+    
+     * @return array()|associativeArray().
+     */
+    public function getsellerhome($sellerid) {	
+      if(empty($sellerid) || !isset($sellerid) || $sellerid == ""){
+		 throw new InputException(__('Id required')); 	
+		}
+		else{	
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		//$tableName = $resource->getTableName('employee'); //gives table name with prefix
+		 
+		//Select Data from table
+		$sql3 = "Select * FROM marketplace_product where seller_id=$sellerid";
+		$result3 = $connection->fetchAll($sql3);
+		
+		$result4='';
+		foreach($result3 as $data)
+		{
+			     //echo $data['mageproduct_id']; 
+			       $productId =$data['mageproduct_id'];
+				   $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+					//  print_r($currentproduct);
+					$result4[]=array("id"=>$currentproduct->getId(),"name"=>$currentproduct->getName(),"description"=>$currentproduct->getDescription(),"price"=>$currentproduct->getPrice(),"finalPrice"=>$currentproduct->getFinalPrice(),"thumbnail"=>'http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail());
+					
+			
+		}
+		//  print_r($result4);
+		//$result['product']=$result4;
+		
+		$result_offerbanner[0]=array('id'=>1,'img'=>'https://d152j5tfobgaot.cloudfront.net/wp-content/uploads/2015/09/yourstory-e-commerce1.jpg');
+		$result_offerbanner[1]=array('id'=>2,'img'=>'http://www.ecouponswala.in/wp-content/uploads/2014/10/Freecultr-Diwali-Offer-600x260.png');
+		
+		$result_brandlist[0]=array('id'=>1,'img'=>'http://btranz.website/fitness_logo4.jpg');
+		$result_brandlist[1]=array('id'=>2,'img'=>'http://btranz.website/fitness_logo5.jpg');
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>$result_offerbanner,'product'=>$result4,'topsellingproduct'=>$result4,'brandlist'=>$result_brandlist);
+		
+		return $result;   
+		
+    }
+	 }
+	 
+	  /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $categoryid Left hand operand.
+     * @param int $sellerid Left hand operand.
+	 * @return array()|associativeArray().
+     */
+    public function getcategoryproductlist($categoryid,$sellerid) {	
+      if(empty($categoryid) || !isset($categoryid) || $categoryid == ""){
+		// throw new InputException(__('Id required')); 	
+		$result[]=array('status'=>array("code"=>"0","message"=>"unsucess"));
+		return $result; 
+		}
+		else{	
+		
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$sql3 = "SELECT * FROM catalog_category_product a ,marketplace_product b where a.category_id=$categoryid and a.product_id=b.mageproduct_id and seller_id=$sellerid";
+		$result3 = $connection->fetchAll($sql3);
+		$result4='';
+		foreach($result3 as $data)
+		{
+			   $productId =$data['product_id'];
+				   $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+					//  print_r($currentproduct);
+					/* $result4[]['name']=$currentproduct->getName(); 
+					$result4[]['description']=$currentproduct->getDescription(); 
+					$result4[]['price']=$currentproduct->getPrice();
+					$result4[]['finalPrice']=$currentproduct->getFinalPrice();
+					$result4[]['thumbnail']='http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail(); */
+					
+					$result4[]=array("id"=>$currentproduct->getId(),"name"=>$currentproduct->getName(),"description"=>$currentproduct->getDescription(),"price"=>$currentproduct->getPrice(),"finalPrice"=>$currentproduct->getFinalPrice(),"thumbnail"=>'http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail());
+					
+			
+		}
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'product'=>$result4);
+		 
+		
+		return $result;   
+		
+    }
+	 }
+	 
+	 
+	   /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param int $productid Left hand operand.
+	 * @return array()|associativeArray().
+     */
+    public function getproductdetails($productid) {	
+      if(empty($productid) || !isset($productid) || $productid == ""){
+		// throw new InputException(__('Id required')); 	
+		$result[]=array('status'=>array("code"=>"0","message"=>"unsucess"));
+		return $result; 
+		}
+		else{	
+		
+		/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$sql3 = "SELECT * FROM catalog_category_product a ,marketplace_product b where a.category_id=$categoryid and a.product_id=b.mageproduct_id and seller_id=$sellerid";
+		$result3 = $connection->fetchAll($sql3);
+		$result4='';
+		foreach($result3 as $data)
+		{ */
+			   
+				   $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productid);
+					//print_r($currentproduct);
+					/* $result4[]['name']=$currentproduct->getName(); 
+					$result4[]['description']=$currentproduct->getDescription(); 
+					$result4[]['price']=$currentproduct->getPrice();
+					$result4[]['finalPrice']=$currentproduct->getFinalPrice();
+					$result4[]['thumbnail']='http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail(); */
+					$allimages=$currentproduct->getMediaGallery('images');
+					//print_r($allimages);
+					$imgarray=array();
+					foreach($allimages as $imgurl)
+						{
+							$imgarray[]='http://btranz.website/pub/media/catalog/product'.$imgurl['file'];
+						}
+					$result4[]=array("name"=>$currentproduct->getName(),"description"=>$currentproduct->getDescription(),"price"=>$currentproduct->getPrice(),"finalPrice"=>$currentproduct->getFinalPrice(),"thumbnail"=>'http://btranz.website/pub/media/catalog/product'.$currentproduct->getthumbnail(),"fullImage"=>'http://btranz.website/pub/media/catalog/product'.$currentproduct->getImage(),'sku'=>$currentproduct->getSku(),'mediagallery'=>$imgarray);
+					
+			
+		//}
+		$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'productdetails'=>$result4);
+		 
+		
+		return $result;   
+		
+    }
+	 }
+	 
+	   /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param string $username Left hand operand.
+     * @param string $password Right hand operand.
+     * @return array()|associativeArray().
+     */
+    public function userlogin($username,$password) { 
+      /* $result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>array(array('id'=>1,'img'=>'https://d152j5tfobgaot.cloudfront.net/wp-content/uploads/2015/09/yourstory-e-commerce1.jpg'),array('id'=>2,'img'=>'http://www.ecouponswala.in/wp-content/uploads/2014/10/Freecultr-Diwali-Offer-600x260.png')));
+		return $result;  */ 
+                if (!empty($username) && !empty($password)) {
+            
+                $customer = $this->customerAccountManagement->authenticate($username,$password);
+				print_r($customer);
+                /* $this->session->setCustomerDataAsLoggedIn($customer);
+                 $this->session->regenerateId(); */
+				$result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"),'offersbanners'=>array(array('id'=>1,'img'=>'https://d152j5tfobgaot.cloudfront.net/wp-content/uploads/2015/09/yourstory-e-commerce1.jpg'),array('id'=>2,'img'=>'http://www.ecouponswala.in/wp-content/uploads/2014/10/Freecultr-Diwali-Offer-600x260.png')));
+		        return $result; 
+			   } 			
+
+	 }
+	 
+	    /**
+     * Return the sum of the two numbers.
+     *
+     * @api
+     * @param string $username Left hand operand.
+	 * @param string $password Right hand operand.
+     * @return array()|associativeArray().
+     */
+    public function registration($username,$password) { 
+     /*  $result[]=array('status'=>array("code"=>"1","message"=>"sucess","seller_id"=>"2"));
+		return $result; */    
+        // Get Website ID
+         $websiteId  = $this->storeManager->getWebsite()->getWebsiteId();
+
+        // Instantiate object (this is the most important part)
+         $customer   = $this->customerFactory->create();
+       // $customer->setWebsiteId($websiteId);
+
+        // Preparing data for new customer
+        $customer->setEmail($username); 
+        $customer->setFirstname("");
+        $customer->setLastname("");
+        $customer->setPassword($password);
+
+        // Save data
+       $customer->save();
+        $customer->sendNewAccountEmail();
+		// $id=$customer->getId(); 
+		  if($customer->getId())
+		 {
+			 $result[]=array('status'=>array("code"=>"1","message"=>"sucess"),'customer'=>array('id'=>$customer->getId(),'username'=>$username,'password'=>$password));
+		    //echo $customer->getId();
+		 }
+		 else
+		 {
+		$result[]=array('status'=>array("code"=>"1","message"=>"error"));
+		
+		 }
+		 return $result; 
+	 }
+	
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_Marketplace
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2016 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <chharo>
+            <authentication>
+                <chharo_log>0</chharo_log>
+            </authentication>
+        </chharo>
+    </default>
+</config>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+        <add id="Productbanner_Gridpart4::Gridpart4" title="Productbanner" module="Productbanner_Gridpart4" sortOrder="13" dependsOnModule="Productbanner_Gridpart4" resource="Productbanner_Gridpart4::Gridpart4"/>
+        <add id="Productbanner_Gridpart4::gridpart2_system" title="Productbanner" module="Productbanner_Gridpart4" sortOrder="10" parent="Productbanner_Gridpart4::Gridpart4" resource="Productbanner_Gridpart4::gridpart4_system" />
+        <add id="Productbanner_Gridpart4::gridpart4_template" title="Manage Banner" module="Productbanner_Gridpart4" sortOrder="10" parent="Productbanner_Gridpart4::gridpart2_system" action="Gridpart4/template" resource="Productbanner_Gridpart4::gridpart4_template"/>
+		
+    </menu>
+</config>
+

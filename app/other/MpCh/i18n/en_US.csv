@@ -1,0 +1,111 @@
+"In stock","In stock"
+"Out of stock","Out of stock"
+N/A,N/A
+No,No
+"Review by %1","Review by %1"
+"(Posted on %1)","(Posted on %1)"
+sample,sample
+"Buy %1 for %2 each","Buy %1 for %2 each"
+and,and
+save,save
+"Sold By","Sold By"
+"positive feedback","positive feedback"
+"%1 ratings","%1 ratings"
+Price,Price
+Value,Value
+Quality,Quality
+"Invalid Request.","Invalid Request."
+"This account is not confirmed.","This account is not confirmed."
+"Invalid login or password.","Invalid login or password."
+"The message has been sent.","The message has been sent."
+"The order has been cancelled.","The order has been cancelled."
+"You are not permitted to cancel this order.","You are not permitted to cancel this order."
+"The order has not been cancelled.","The order has not been cancelled."
+"Mail sent successfully !!","Mail sent successfully !!"
+"Credit Memos List","Credit Memos List"
+"Credit Memos #","Credit Memos #"
+"Bill To Name","Bill To Name"
+"Created At","Created At"
+Status,Status
+Amount,Amount
+Refunded,Refunded
+Order,Order
+"Customer: ","Customer: "
+"Date: ","Date: "
+"Order Total: ","Order Total: "
+"View Order Details","View Order Details"
+"Cancel Order","Cancel Order"
+"Are you sure you want to cancel this order?","Are you sure you want to cancel this order?"
+"Send Email To Customer","Send Email To Customer"
+"Are you sure you want to send order email to customer?","Are you sure you want to send order email to customer?"
+Invoice,Invoice
+"Are you sure you want to create invoice?","Are you sure you want to create invoice?"
+"Pay Admin Commission","Pay Admin Commission"
+"If you pay admin commission then you can not do refund for buyer in future. Are you sure you want to pay admin for his commission?","If you pay admin commission then you can not do refund for buyer in future. Are you sure you want to pay admin for his commission?"
+"Order #%1 - %2","Order #%1 - %2"
+Invoices,Invoices
+Shipments,Shipments
+Refunds,Refunds
+"Order Date: ","Order Date: "
+"Buyer Information","Buyer Information"
+"Customer Name","Customer Name"
+Email,Email
+"Shipping Address","Shipping Address"
+"Shipping Information","Shipping Information"
+"No shipping information available","No shipping information available"
+"Billing Address","Billing Address"
+"Payment Method","Payment Method"
+Subtotal,Subtotal
+"Shipping & Handling","Shipping & Handling"
+"Total Tax","Total Tax"
+"Total COD Charges","Total COD Charges"
+"Total Ordered Amount","Total Ordered Amount"
+"Total Vendor Amount","Total Vendor Amount"
+"Total Admin Commission","Total Admin Commission"
+"You need to purchase item(s) first to make a review.","You need to purchase item(s) first to make a review."
+"By %1","By %1"
+on,on
+%1,%1
+" Total Sales "," Total Sales "
+" Today "," Today "
+" Week "," Week "
+" Month "," Month "
+" Total Payout "," Total Payout "
+" Remaining Amount "," Remaining Amount "
+"About %1","About %1"
+"On the Social Web","On the Social Web"
+"%1's Rating","%1's Rating"
+Reviwed,Reviwed
+"%s Times","%s Times"
+"Can not create invoice as order is in HOLD state","Can not create invoice as order is in HOLD state"
+"We can't save the invoice right now.","We can't save the invoice right now."
+"You can't create an invoice without products.","You can't create an invoice without products."
+"Invoice has been created for this order.","Invoice has been created for this order."
+"You cannot create invoice for this order.","You cannot create invoice for this order."
+"Cannot create Invoice for this order.","Cannot create Invoice for this order."
+"Invalid customer","Invalid customer"
+"Your review successfully saved","Your review successfully saved"
+"Message has been sent","Message has been sent"
+"Failed to send the creditmemo email.","Failed to send the creditmemo email."
+"You are not authorized to send message","You are not authorized to send message"
+"The order email has been sent.","The order email has been sent."
+"Failed to send the order email.","Failed to send the order email."
+"Failed to send the invoice email.","Failed to send the invoice email."
+Pending,Pending
+Canceled,Canceled
+"Credit Memo Information","Credit Memo Information"
+"Credit Memo #%1 - %2 | %s","Credit Memo #%1 - %2 | %s"
+"Order Information","Order Information"
+"Order # %1","Order # %1"
+"Order Status","Order Status"
+"Order Date","Order Date"
+Paid,Paid
+"View Invoice Details","View Invoice Details"
+"Invoice #%1 - %2 | %3","Invoice #%1 - %2 | %3"
+"View Shipment Details","View Shipment Details"
+"Shipment #%1 | %2","Shipment #%1 | %2"
+Carrier,Carrier
+"Tracking Number","Tracking Number"
+Custom,Custom
+"Marketplace Chharo","Marketplace Chharo"
+"Admin Details For Chat","Admin Details For Chat"

@@ -1,0 +1,8 @@
+﻿Legend
+
++ Features
+- Bugs
+
+
+-------------------------------- Version 2.0.0 -------------------------------
+	+ provides several api methods to get seller details like orders, products   

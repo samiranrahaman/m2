@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_MpChharo
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Custom_MpChharo::config_mpchharo" title="Marketplace chharo configuration section" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

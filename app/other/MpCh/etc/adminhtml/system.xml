@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_MpChharo
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Custom" translate="label" sortOrder="10">
+            <label>Custom</label>
+        </tab>
+        <section id="mpchharo" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Marketplace Chharo</label>
+            <!-- Assign section to tab -->
+            <tab>Custom</tab>
+            <resource>Custom_MpChharo::config_mpchharo</resource>
+            <!-- create group for fields in section -->
+            <group id="admin" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Admin Details For Chat</label>
+                <field id="email" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email</label>
+                    <comment>put email address of admin with which admin created customer account in front end. eg. admin@example.com</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

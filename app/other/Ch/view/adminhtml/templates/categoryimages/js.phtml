@@ -1,0 +1,27 @@
+<?php
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_Marketplace
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+
+// @codingStandardsIgnoreFile
+$categories = $block->getCategoryIds();
+$formData = [
+	'categories'		  => implode(',',$categories),
+    'categoryTreeAjaxUrl' => $block->getUrl('chharo/categoryimages/categorytree/', ['_secure' => $this->getRequest()->isSecure()])
+];
+$serializedFormData = $this->helper('Magento\Framework\Json\Helper\Data')->jsonEncode($formData);
+?>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "categoryImages": <?php /* @noEscape */ echo $serializedFormData; ?>
+        }
+    }
+</script>

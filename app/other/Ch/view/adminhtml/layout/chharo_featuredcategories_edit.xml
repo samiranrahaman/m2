@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Custom_Chharo::css/style.css"/>
+        <link src="Custom_Chharo::js/bootstrap/featuredcategories-post-action.js"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <block class="Custom\Chharo\Block\Adminhtml\Edit\Featuredcategories\Category" name="featuredCategory_js" template="featuredcategories/js.phtml"/>
+            <uiComponent name="chharo_featuredcategories_form"/>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+        <add id="Adbanner_Gridpartbanner::Gridpartbanner" title="Ad banner" module="Adbanner_Gridpartbanner" sortOrder="13" dependsOnModule="Adbanner_Gridpartbanner" resource="Adbanner_Gridpartbanner::Gridpartbanner"/>
+        <add id="Adbanner_Gridpartbanner::gridpart2_system" title="Ad banner" module="Adbanner_Gridpartbanner" sortOrder="10" parent="Adbanner_Gridpartbanner::Gridpartbanner" resource="Adbanner_Gridpartbanner::gridpart4_system" />
+        <add id="Adbanner_Gridpartbanner::gridpartbanner_template" title="Manage Ad banner" module="Adbanner_Gridpartbanner" sortOrder="10" parent="Adbanner_Gridpartbanner::gridpart2_system" action="Gridpartbanner/template" resource="Adbanner_Gridpartbanner::gridpartbanner_template"/>
+		
+    </menu>
+</config>
+

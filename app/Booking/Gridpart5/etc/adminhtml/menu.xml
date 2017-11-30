@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+        <add id="Booking_Gridpart5::Gridpart5" title="Booking List" module="Booking_Gridpart5" sortOrder="11" dependsOnModule="Booking_Gridpart5" resource="Booking_Gridpart5::Gridpart5"/>
+        <add id="Booking_Gridpart5::gridpart2_system" title="Booking" module="Booking_Gridpart5" sortOrder="11" parent="Booking_Gridpart5::Gridpart5" resource="Booking_Gridpart5::gridpart2_system" />
+        <add id="Booking_Gridpart5::gridpart5_template" title="View Booking" module="Booking_Gridpart5" sortOrder="11" parent="Booking_Gridpart5::gridpart2_system" action="Gridpart5/template" resource="Booking_Gridpart5::gridpart5_template"/>
+		
+    </menu>
+</config>
+
+ 

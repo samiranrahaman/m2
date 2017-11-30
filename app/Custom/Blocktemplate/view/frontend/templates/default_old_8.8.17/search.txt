@@ -1,0 +1,79 @@
+/* $collection->addFieldToFilter(
+							array('first_name','last_name'),
+							array(
+								array('like' => '%'.$post['firstName'].'%'),
+								array('like' => '%.'$post['lastName'].'%')
+							)             
+						); */
+				  $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $products = $objectManager->create('Magento\Catalog\Model\ProductFactory')
+				                     ->create()
+									 ->getCollection()
+									// ->addFieldToFilter('store_id', 1); 
+                                   ->addFieldToFilter('name', array("like"=>'%'.$name.'%') );									
+				  
+				  //var_dump($products->getData());
+				  foreach($products as $product)
+				  {
+                        $productId =$product->getId();
+					    $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+				
+					 $offfer_tag = $currentproduct->getData('offfer_tag');
+					$attr = $currentproduct->getResource()->getAttribute('offfer_tag');
+					//$optionText='null';
+				 //if ($attr->usesSource()) {
+					   $optionText =$attr->getSource()->getOptionText($offfer_tag);
+				// }
+				if($optionText=='')
+				{
+					$optionText='null';
+				}
+				   
+				     $_price=$currentproduct->getPrice();
+				     $_finalPrice=$currentproduct->getFinalPrice();
+					 $savetag='null';
+						if($_finalPrice < $_price):
+						$_savePercent = 100 - round(($_finalPrice / $_price)*100);
+						//echo $_savePercent;
+						$savetag=$_savePercent;
+                   endif;
+
+				   $producturl=$currentproduct->getProductUrl();
+				   
+				   
+				   $sql_wishlist = "Select * FROM wishlist a ,wishlist_item b  where a.customer_id=$sellerid and a.wishlist_id=b.wishlist_id and b.product_id=$productId ";
+		           $result_wishlist = $connection->fetchAll($sql_wishlist);
+				  /*  $wish='';
+				   if(!empty($result_wishlist))
+				   {
+					   $wish=array("productId"=>$productId,"sellerid"=>$sellerid,"status"=>1); 
+					   
+				   }
+				   else
+				   {
+					   $wish=array("productId"=>$productId,"sellerid"=>$sellerid,"status"=>0);
+				   } */
+				   
+				   
+				   $reviewFactory = $objectManager->create('Magento\Review\Model\Review');
+				   $storeId = $this->storeManager->getStore()->getId();
+                   $reviewFactory->getEntitySummary($currentproduct, $storeId);
+				   $ratingSummary = $currentproduct->getRatingSummary()->getRatingSummary();
+				   if($ratingSummary=='')
+				{
+					$ratingSummary='null';
+				}
+				   //print_r($ratingSummary);
+				   
+				   
+				   
+				   
+					$result4[]=array("id"=>$currentproduct->getId(),"name"=>$currentproduct->getName(),"description"=>$currentproduct->getDescription(),"price"=>$currentproduct->getPrice(),"finalPrice"=>$currentproduct->getFinalPrice(),"thumbnail"=>'http://159.203.151.92/pub/media/catalog/product'.$currentproduct->getthumbnail(),"offferTag"=>array("shareurl"=>$producturl,"Tag"=>$optionText,'discount'=>$savetag,'rating'=>$ratingSummary));
+					
+				  }
+/* 				   $product = $productFactory->create()->getCollection()
+				   ->addFieldToFilter('store_id', 1)
+                   ->getFirstItem(); */
+				  
+				  
+				  print_r($result4);

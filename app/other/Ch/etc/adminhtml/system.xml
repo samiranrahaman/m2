@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_Chharo
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Custom" translate="label" sortOrder="10">
+            <label>Custom</label>
+        </tab>
+        <section id="chharo" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Chharo</label>
+            <!-- Assign section to tab -->
+            <tab>Custom</tab>
+            <resource>Custom_Chharo::config_chharo</resource>
+            <!-- create group for fields in section -->
+            <group id="authentication" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Set Parameters for User Authentication</label>
+                <field id="username" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Username</label>
+                </field>
+
+                <field id="password" translate="label" type="obscure" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <attribute type="shared">1</attribute>
+                </field>
+
+                <field id="session_timeout" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API Session Timeout</label>
+                    <comment>Enter the time in seconds</comment>
+                </field>
+
+                <field id="theme_code" translate="label comment" sortOrder="4" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Theme Code</label>
+                    <source_model>Custom\Chharo\Model\System\Source</source_model>
+                </field>
+
+                <field id="chharo_log" translate="label comment" sortOrder="4" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Logging</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="notification" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Android Push Notification Parameters</label>
+                <field id="apikey" translate="label comment" sortOrder="1" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>API key</label>
+                </field>
+                <field id="topic" translate="label comment" sortOrder="2" type="text" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Topic</label>
+                    <comment>eg. local</comment>
+                </field>
+            </group>
+            <group id="iosnotification" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>iOS Push Notification Parameters</label>
+                <field id="isSandbox" translate="label comment" sortOrder="1" type="select" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable SandBox Push Notification</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+        </section>
+    </system>
+</config>

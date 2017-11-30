@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>    	
+        <add id="Addsubscriptionplans_Gridpartsubscriptionplans::Gridpartsubscriptionplans" title="Add subscriptionplan" module="Addsubscriptionplans_Gridpartsubscriptionplans" sortOrder="13" dependsOnModule="Addsubscriptionplans_Gridpartsubscriptionplans" resource="Addsubscriptionplans_Gridpartsubscriptionplans::Gridpartsubscriptionplans"/>
+        <add id="Addsubscriptionplans_Gridpartsubscriptionplans::gridpart2_system" title="Add subscriptionplan" module="Addsubscriptionplans_Gridpartsubscriptionplans" sortOrder="10" parent="Addsubscriptionplans_Gridpartsubscriptionplans::Gridpartsubscriptionplans" resource="Addsubscriptionplans_Gridpartsubscriptionplans::gridpart4_system" />
+        <add id="Addsubscriptionplans_Gridpartsubscriptionplans::gridpartbanner_template" title="Manage subscriptionplan" module="Addsubscriptionplans_Gridpartsubscriptionplans" sortOrder="10" parent="Addsubscriptionplans_Gridpartsubscriptionplans::gridpart2_system" action="Gridpartsubscriptionplans/template" resource="Addsubscriptionplans_Gridpartsubscriptionplans::gridpartbanner_template"/>
+		
+    </menu>
+</config>
+

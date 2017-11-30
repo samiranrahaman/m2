@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../app/code/Magento/Webapi/etc/webapi.xsd">
+
+    <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerprofile/1 -->
+    <route url="/V1/marketplace/getsellerprofile/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getsellerprofile"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route>
+  <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getproductlistofseller/1	-->
+	 <route url="/V1/marketplace/getproductlistofseller/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getproductlistofseller"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/getservicelistofseller/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getservicelistofseller"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getproductlistofseller/1	-->
+	 <route url="/V1/marketplace/getofferbanner/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getofferbanner"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/getserviceofferbanner/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getserviceofferbanner"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/gettopsellingproductseller/1	-->
+	 <route url="/V1/marketplace/gettopproductselling/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="gettopproductselling"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+		
+	<route url="/V1/marketplace/gettopserviceselling/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="gettopserviceselling"/>  
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getbrandlist	-->
+	 <route url="/V1/marketplace/getbrandlist" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getbrandlist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getbrandlist	-->
+	 <route url="/V1/marketplace/getproductcategories/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getproductcategories"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	 <route url="/V1/marketplace/getproductmaincategories/:sellerid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getproductmaincategories"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	 <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/getsellerhome/:sellerid/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getsellerhome"/>
+        <resources>
+		 <resource ref="anonymous"/>
+         <!--   <resource ref="self"/>-->
+        </resources>
+    </route>
+	
+	 <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	--> 
+	 <route url="/V1/marketplace/getcategoryproductlist/:categoryid/:sellerid/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getcategoryproductlist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    
+	 <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/getproductdetails/:productid/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getproductdetails"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	 <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/userlogin/:username/:password" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="userlogin"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	 <!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/registration/:username/:password/:name" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="registration"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/addtocart/:productid/:quantity/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="addtocart"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/updatecartproduct/:productid/:quantity/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="updatecartproduct"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/deletecartproduct/:productid/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="deletecartproduct"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/getcartproduct/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getcartproduct"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	 <route url="/V1/marketplace/bookingaddtocart/:productid/:quantity/:userid/:dat/:day/:slot/:slotno" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="bookingaddtocart"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>  
+    </route>
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	<route url="/V1/marketplace/productsearch/:sellerid/:name/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="productsearch"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>	
+	
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/simillarproducts/1	-->
+	<route url="/V1/marketplace/simillarproducts/:sellerid/:productid/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="simillarproducts"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route> 
+	
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	<route url="/V1/marketplace/autocompletesearch/:sellerid/:name" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="autocompletesearch"/>
+        <resources>
+            <resource ref="anonymous"/> 
+        </resources>
+    </route>
+	
+	<route url="/V1/marketplace/customcheckout/:userid/:email/:name/:street/:city/:country_id/:postcode/:telephone/:shipping/:payment/:quoteId" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="customcheckout"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/buynow/:userid/:productid" method="GET"> 
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="buynow"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/customcheckoutdirect/:userid/:productid/:price/:email/:name/:street/:city/:country_id/:postcode/:telephone/:shipping/:payment/:quoteid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="customcheckoutdirect"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/customcheckoutdirectconfirm/:quoteid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="customcheckoutdirectconfirm"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/customcheckoutcarttotal/:userid/:quoteId" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="customcheckoutcarttotal"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<route url="/V1/marketplace/applycoupon/:userid/:quoteId/:coupon" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="applycoupon"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/removecoupon/:userid/:quoteId" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="removecoupon"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/applydeleverytype/:userid/:quoteId/:shipping" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="applydeleverytype"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/orderhistory/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="orderhistory"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/orderitemlist/:orderid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="orderitemlist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/cancelorderbuyer/:orderid/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="cancelorderbuyer"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/addwishlist/:userid/:productid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="addwishlist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/getwishlist/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getwishlist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/itemremovewishlist/:userid/:productid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="itemremovewishlist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/wishlisttag/:userid/:productid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="wishlisttag"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/getaccountinfo/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getaccountinfo"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route>
+	<route url="/V1/marketplace/getaddress/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getaddress"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route>
+	<route url="/V1/marketplace/editbillingaddress/:userid/:fname/:lname/:street/:city/:country_id/:postcode/:telephone" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="editbillingaddress"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route>
+	<route url="/V1/marketplace/editaccountinfo/:userid/:fname/:lname/:dob" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="editaccountinfo"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/changepassword/:userid/:oldpassword/:newpassword" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="changepassword"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/forgotpassword/:email" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="forgotpassword"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/countylist" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="countylist"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/deacivateaccount/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="deacivateaccount"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/acivateaccount/:email" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="acivateaccount"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/adminlogin/:username/:password" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="adminlogin"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	 
+    </route>
+	<route url="/V1/marketplace/postreview/:product_id/:userid/:nicname/:summary/:review/:quality/:value/:price" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="postreview"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+	<route url="/V1/marketplace/getreview/:product_id" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="getreview"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>	
+    </route> 
+<!--Total site-->
+<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	<route url="/V1/marketplace/homepagebanner" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="homepagebanner"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>	
+	<!-- appma -->
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	<route url="/V1/marketplace/appmarecentproductapp" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="appmarecentproductapp"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<!-- build app -->
+	<!-- Example: curl http://127.0.0.1/index.php/rest/V1/marketplace/getsellerhome/1	-->
+	<route url="/V1/marketplace/androidappbuild/:userid" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="androidappbuild"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/appmatoptproductapp" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="appmatoptproductapp"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/bookingcalender/:product_id" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="bookingcalender"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/availableappointment/:product_id/:day/:month/:list_day/:year" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="availableappointment"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	
+	<route url="/V1/marketplace/bookingform/:customer_id/:product_id/:dat/:slot/:stime/:endtime" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="bookingform"/> 
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+	<route url="/V1/marketplace/bookingcustomcheckout/:userid/:email/:name/:street/:city/:country_id/:postcode/:telephone/:shipping/:payment/:quoteId" method="GET">
+        <service class="Seller\WebService\Api\MarketplaceInterface" method="bookingcustomcheckout"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+</routes>

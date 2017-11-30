@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- /**
+* Custom Software.
+*
+* @category Custom
+* @package Custom_MpChharo
+* @author Custom
+* @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+* @license https://store.Custom.com/license.html
+*/ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Custom_MpChharo" setup_version="2.0.0" active="true">
+        <sequence>
+            <module name="Custom_Chharo"/>
+    		<module name="Custom_Marketplace"/>
+		</sequence>
+    </module>
+</config>

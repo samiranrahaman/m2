@@ -1,0 +1,70 @@
+<?php
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_Marketplace
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+
+// @codingStandardsIgnoreFile
+$count = 0;
+$category_helper = $this->helper('Magento\Catalog\Helper\Category');
+$category_model = $block->getCategory();
+$_categories = $category_helper->getStoreCategories();
+$categories = $block->getCategoryIds();
+foreach($_categories as $_category)	{
+	$count++;
+ 	if(count($category_model->getAllChildren($category_model->load($_category['entity_id'])))-1 > 0){ ?>
+		<div class="wk-cat-container" style="margin-left:0px;">
+			<span class="wk-plus">
+			</span><span class="wk-foldersign"></span>
+			<span class="wk-elements wk-cat-name"><?php echo $_category->getName() ?></span>
+			<?php 
+			if(in_array($_category["entity_id"],$categories)) {?>
+				<input class="wk-elements" type="radio" name="chharo_categoryimages[category_id]" data-form-part="chharo_categoryimages_form" value=<?php echo $_category['entity_id'] ?> checked />
+			 	<?php 
+			}else { ?>
+				<input class="wk-elements" type="radio" name="chharo_categoryimages[category_id]" data-form-part="chharo_categoryimages_form" value='<?php echo $_category['entity_id'] ?>'/>
+			<?php 
+			} ?>
+		</div>
+		<?php
+	}else { ?>
+		<div class="wk-cat-container">
+			</span><span class="wk-foldersign"></span>
+			<span class="wk-elements wk-cat-name"><?php echo $_category->getName() ?></span>
+			<?php 
+			if(in_array($_category["entity_id"],$categories)) {?>
+				<input class="wk-elements" type="radio" name="chharo_categoryimages[category_id]" data-form-part="chharo_categoryimages_form" value=<?php echo $_category['entity_id'] ?> checked />
+			 	<?php 
+			}else { ?>
+				<input class="wk-elements" type="radio" name="chharo_categoryimages[category_id]" data-form-part="chharo_categoryimages_form" value='<?php echo $_category['entity_id'] ?>'/>
+			<?php 
+			} ?>
+		</div> 
+   		<?php 
+	}
+}
+if ($count == 0) {
+	$_category = $block->getCategoryData(2);
+	if ($_category->getId()) { ?>
+		<div class="wk-cat-container" style="margin-left:0px;">
+			<span class="wk-plus">
+			</span><span class="wk-foldersign"></span>
+			<span class="wk-elements wk-cat-name"><?php echo $_category->getName() ?></span>
+			<?php 
+			if(in_array($_category["entity_id"],$categories)) {?>
+				<input class="wk-elements" type="radio" name="chharo_categoryimages[category_id]" data-form-part="chharo_categoryimages_form" value=<?php echo $_category['entity_id'] ?> checked />
+			 	<?php 
+			}else { ?>
+				<input class="wk-elements" type="radio" name="chharo_categoryimages[category_id]" data-form-part="chharo_categoryimages_form" value='<?php echo $_category['entity_id'] ?>'/>
+			<?php 
+			} ?>
+		</div>
+		<?php
+	}
+}
+?>

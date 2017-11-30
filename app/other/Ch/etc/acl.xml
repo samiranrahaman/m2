@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Custom Software.
+ *
+ * @category  Custom
+ * @package   Custom_Chharo
+ * @author    Custom
+ * @copyright Copyright (c) 2010-2017 Custom Software Private Limited (https://Custom.com)
+ * @license   https://store.Custom.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Custom_Chharo::chharo" title="Chharo" sortOrder="10">
+                    <resource id="Custom_Chharo::menu" title="Menu" sortOrder="10">
+                        <resource id="Custom_Chharo::bannerimage" title="Manage Banner Images" sortOrder="1"/>
+                        <resource id="Custom_Chharo::notification" title="Manage Notifications" sortOrder="2"/>
+                        <resource id="Custom_Chharo::featuredcategories" title="Manage Featured Categories" sortOrder="3"/>
+                        <resource id="Custom_Chharo::categoryimages" title="Manage Category Banners and Icons" sortOrder="4"/>
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Custom_Chharo::config_chharo" title="Chharo Configuration Section" sortOrder="50"/>
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

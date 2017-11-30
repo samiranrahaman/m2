@@ -1,0 +1,103 @@
+<?php
+/**
+ * Featured Product view template
+ *
+ * @var $block Custom\Blocktemplate\Block\Featuredproduct
+ */
+?>
+<!--<h1><?php echo $block->getTitle(); ?></h1>-->
+<section class="container">
+   <div class="block widget block-new-products grid">   <div class="block-title">Featured Products</div>
+  	<div class="block-content">  
+			<div class="block-content">
+			   <div class="products-grid grid">
+			      <div class="row ves-grid widget-new-grid">
+				  <?php
+				  
+				  /* $collection->addFieldToFilter(
+							array('first_name','last_name'),
+							array(
+								array('like' => '%'.$post['firstName'].'%'),
+								array('like' => '%.'$post['lastName'].'%')
+							)             
+						); */
+				  $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $products = $objectManager->create('Magento\Catalog\Model\ProductFactory')
+				                     ->create()
+									 ->getCollection()
+									 ->addStoreFilter(1)
+								    ->addFieldToFilter('featured',1)
+									//->setOrder('entity_id')
+									->setPageSize(4);
+				  
+				  //var_dump($products->getData());
+				  /* foreach($products as $currentproduct)
+				  {
+					  echo $currentproduct->getId();
+					  echo $currentproduct->getDescription();
+					 echo $currentproduct->getPrice();
+				  } */
+/* 				   $product = $productFactory->create()->getCollection()
+				   ->addFieldToFilter('store_id', 1)
+                   ->getFirstItem(); */
+				  
+				  
+				  //print_r($product);
+				  
+				  
+				  
+				  
+				  
+				  
+				  
+				  /* $resource = $objectManager->get('Magento\Framework\App\ResourceConnection');  
+		          $connection = $resource->getConnection();
+				 $sql3 = "Select * FROM catalog_product_entity where type_id!='customProductType'limit 4";
+		         $result3 = $connection->fetchAll($sql3); 
+				// print_r($result3); */
+				//foreach($result3 as $data)
+				foreach($products as $product)
+				{
+						
+				 //$productId =$data['entity_id'];
+				 $productId =$product->getId();
+				   $objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				   $currentproduct = $objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+					 ?>
+					 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 ves-grid-item">
+								  <div data-container="product-grid" class="product-item-info">
+												<a tabindex="-1" class="product photo product-item-photo" href="<?php echo $currentproduct->getProductUrl();?>">
+												
+												<span style="width:240px;" class="product-image-container">
+													<span style="padding-bottom: 116.666666667%;" class="product-image-wrapper">
+														<img width="240" height="280" alt="Home product" src="http://159.203.151.92/pub/media/catalog/product<?php echo $currentproduct->getthumbnail(); ?>" class="product-image-photo"></span>
+												</span>
+											</a>
+											<div class="product details product-item-details">
+																				<strong class="product name product-item-name">
+											<a href="<?php echo $currentproduct->getProductUrl();?>" class="product-item-link">
+											<?php echo $currentproduct->getName();?>                                  
+											</a>
+												</strong>
+												<a href="<?php echo $currentproduct->getProductUrl();?>" class="product-item-link">
+													<button class="action tocart primary">
+														<span>
+															<span>
+																View Detail                                    		
+															</span>
+														</span>
+													</button>
+												</a>
+											</div>
+								</div>
+				  </div>
+					<?php 
+					} 
+				  ?>
+				  
+			     </div>
+			   </div>
+		   </div>
+	</div>
+  </div>
+ </section>

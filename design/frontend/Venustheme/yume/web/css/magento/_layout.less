@@ -1,0 +1,221 @@
+// *****************************************************
+//  * @package Venus Theme Framework for Magento 2.x
+//  * @version 1.0
+//  * @author http://www.venustheme.com
+//  * @copyright Copyright (C) Augus 2015 VenusThemes.com <@email:venusthemes@gmail.com>.All rights reserved.
+//  * @license   GNU General Public License version 1
+// ******************************************************
+body{
+    &.layout-boxed-md{
+        #page{  
+            max-width: @layout__max-width;  
+        }  
+    }
+    &.layout-boxed-lg{
+        #page{  
+            max-width: @layout__max-width;   
+        }
+    }
+    &.fullwidth{ 
+    }  
+}
+.breadcrumbs .items {
+    color: #000;
+    a {
+        color: #000!important;
+    }
+}
+
+.cms-home h1.page-title { display: none !important;}
+
+// Slideshow
+.ves-slideshow {}
+// Banner Top
+.ves-bannertop {} 
+// Showcase
+.ves_showcase {}
+
+.ves-masstop {}
+
+// Brand module
+.ves-massbottom {
+    .block {
+        margin-bottom: 0;
+        .block-title {
+            strong {color: @white;}
+        }
+        .block-content{ 
+            color: @white;
+            padding:30px 0;
+
+        }
+    }
+}
+.call-online{
+    float: left;
+    color: #696969;
+    font-size: 12px;
+}
+.ves-massbottom2 {}
+.page-footer { background: #f5f5f5;}
+.footer-top {
+    ul {
+        border-bottom: 1px solid #ddd;
+        padding: 40px 0;
+        text-align: center;
+        li {
+            display: inline-block;
+            list-style: none;
+            padding:0 25px;
+            text-transform: uppercase;
+            a {
+                font-size: 11px;
+                font-weight: 700;
+                color: #000;
+                letter-spacing: 2px;
+                font-family: 'Open Sans', sans-serif;
+                &:hover {
+                    text-decoration: none;
+                    color: #00b06c;
+                }
+            }
+        }
+    }
+}
+
+.footer-center {
+    padding-top:40px;
+    padding-bottom:40px;
+    .footer-info {
+        span {
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #000;
+            font-weight: 700;
+        }
+        span.title {
+            color: #00b06c;
+        }
+        p {
+            color: #000;
+        }
+    }
+    .list-social {
+        li {
+            display: inline-block;
+            list-style: none;
+            padding:0 15px;
+            a { 
+                color: #000;
+                &:hover, &:focus {
+                    color: #00b06c;
+                }
+            }
+        }
+    }
+}
+
+.copyright {
+    background: #999;
+    min-height: 50px;
+    line-height: 50px;
+    color: #000;
+    text-align: center;
+    font-size: 14px;
+    font-family: "georgia",sans-serif;
+    a {
+        color: @white;
+    }
+}
+
+.page-main > .page-title-wrapper {
+    padding: 0 20px;
+    background: #f1f1f1;
+    margin: 0 0 20px;
+}
+
+.pages strong.page { padding: 0 15px !important}
+.pages .item {
+    font-size: 15px!important;
+}
+
+.block-info.block-info-2columns, .block-info.block-info-3columns{
+    .content{
+        padding: 0; 
+        background: none;
+    }
+}
+
+.block-info.block-info-3columns{
+    .content{
+        .title{font-size: 20px; font-weight: bold;}
+        .info{font-size: 16px;}
+    }
+}
+
+.block-info {
+  color: #333 !important;
+  overflow: hidden;
+  position: relative;
+}
+.block-info .content {
+  padding: 25px 35px 35px;
+  position: absolute;
+  z-index: 1;
+  right: 40px;
+  top: 40px;
+  width: 40%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+.block-info .content .info {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.block-info .content .title {
+  font-size: 3.2rem;
+  font-weight: 300;
+  line-height: 1.2;
+  margin-bottom: 15px;
+  display: block;
+}
+.block-info .content .button.more {
+  background: #333;
+  border: 1px solid #333;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Open Sans", Arial, sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 10px 15px;
+  text-decoration: none;
+  vertical-align: middle;
+  margin-top: 10px;
+}
+.block-info-2columns .sale-mens {
+  width: 50%;
+}
+.block-info-2columns .sale-women {
+  width: 50%;
+}
+.block-info-3columns .block-sale {
+  width: 33.33333333%;
+}
+
+.product-info-main{
+    .old-price .price {
+        color: #999 !important;
+        font-size: 22px !important;
+        margin-left: 8px;
+    }
+    .price-label{display: none;}
+    .product-addto-links a:hover{color: #00b06c;}
+}
+
+.filter-options .swatch-option{height: 27px;}
+a{color: #666;}
+a:hover, a:active, a:focus{color: #00b06c;}
+img{vertical-align: middle;}

@@ -1,0 +1,361 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ 
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php 
+   $_product = $block->getProduct(); 
+   $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+   $product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
+   $product_id=$product->getId();
+   // echo $product->getName(); 
+   $poducttype=$product->getTypeId()
+	/* $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+
+	echo $category->getId(); */
+	
+?>
+<?php if($poducttype=='customProductType') { ?>
+
+
+<?php $buttonTitle = __('Book Now'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty" style="display:none;" >
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Quantity') ?>" class="input-text qty"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+		
+		 <!-- Trigger the modal with a button -->
+ 
+	
+		
+        <div class="actions">
+		<?php 
+		 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+         $customerSession = $objectManager->create('Magento\Customer\Model\Session');  
+		 /* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		$customerSession = $objectManager->get('Magento\Customer\Model\Session');  */
+		
+		//$customerSession = $objectManager->get('Webkul\Marketplace\Block\Account\Dashboard'); 
+	//	$customerSession = $objectManager->get('Customtestimonial\Testimonials\Block\TestimonialsSubmit'); 
+       $customer_id='';
+		if($customerSession->isLoggedIn()) {
+	   // if($customerSession->getCustomerStatus()) {
+		$customer_id=$customerSession->getCustomerId(); 
+   ?>
+  <!-- Modal -->
+<div id="popup-mpdal" class="modal fade customer_<?php echo $customer_id;?>" role="dialog" style="display:none;"> 
+<table>
+<?php 
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$quote_sql = "Select * FROM  sr_booking_timing where product_id=$product_id limit 1";
+		$result_schedule = $connection->fetchAll($quote_sql);
+		if(!empty($result_schedule))
+		{
+			/* print_r($result_schedule);
+			 foreach($result_schedule as $val)
+			{
+				echo $val['startdate'];
+				echo $val['enddate'];
+			} */ 
+			 $startdate=$result_schedule[0]['startdate'];
+			 $enddate=$result_schedule[0]['enddate'];
+			//echo $diff12 = date_diff($startdate,$enddate);
+			$dates = array();
+			$startdate = strtotime($startdate);
+			$enddate = strtotime($enddate);
+           $step = '+1 day';
+		   $output_format = 'm/d/Y';
+			while( $startdate <= $enddate ) {
+
+				$dates[] = date($output_format, $startdate);
+				$startdate = strtotime($step, $startdate);
+			}
+			//print_r($dates);
+			/* $timestamp = strtotime('10/06/2016');
+			$day = date('l', $timestamp); */
+            //var_dump($day);
+			$bookingschedule='';
+			foreach($dates as $kk=>$value1)
+			{
+				//echo $value1;
+				$value2=str_replace("/","-",$value1);
+			$timestamp = strtotime($value1);
+			$day = date('l', $timestamp);
+			//echo"</br>";
+			
+			$quote_sql2 = "Select * FROM  sr_booking_timing where product_id=$product_id and weekday='$day' limit 1";
+		    $result_schedule2 = $connection->fetchAll($quote_sql2);
+			if(!empty($result_schedule2)):
+			foreach($result_schedule2 as $val_sh)
+			{
+				$slottime=$val_sh['starthoure'].':'.$val_sh['startminute'].'-'.$val_sh['endhoure'].':'.$val_sh['endminute'];
+			//	$bookingschedule.='<tr><td>'.$value1.'</td><td>'.$day.'</td><td>'.$val_sh['starthoure'].':'.$val_sh['startminute'].'-'.$val_sh['endhoure'].':'.$val_sh['endminute'].'</td><td><input type="text" name="" value="1" width="50px" /></td><td><button type="button" onclick="booking_add_to_cart();">Book</button></td></tr>';
+			$bookingschedule.='<tr><td>'.$value1.'</td><td>'.$day.'</td><td>'.$val_sh['starthoure'].':'.$val_sh['startminute'].'-'.$val_sh['endhoure'].':'.$val_sh['endminute'].'</td><td><button type="button" onclick="booking_add_to_cart(\''.$value2.'\',\''.$day.'\',\''.$slottime.'\',1,'.$customer_id.','.$product_id.');">Book</button></td></tr>';
+			}
+			endif;
+			
+			
+			}
+			
+		}
+?>
+<!--<tr><th>Date</th><th>Day</th><th>Slot Time</th><th>No. of Slots</th><th></th></tr>-->
+<tr><th>Date</th><th>Day</th><th>Slot Time</th><th></th></tr>
+<?php echo $bookingschedule;?>
+</table>
+</div>
+		
+	
+   
+    <button type="button" onclick="openpopup();"
+								title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+								class="action primary tocart"
+								id="product-addtocart-button"> 
+							<span><i class="fa fa-shopping-cart"></i> <?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+			</button>
+			
+   <?php
+}else{
+    ?>
+	<a title="Add to Cart" class="action primary tocart" 
+			href="http://bookingservice.btranz.website/customer/account/login/">
+			Please Login To View Price</a>
+	<?php
+} 
+
+   ?>
+ 
+  
+	  <!-- <a title="Add to Cart" class="action primary tocart" 
+			href="http://btranz.website/customer/account/login/">
+			Please Login To View Price</a>-->
+	
+            <!--<button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button"> 
+                <span><i class="fa fa-shopping-cart"></i> <?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>-->
+			
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'Magento_Catalog/product/view/validation',
+        'Magento_Catalog/js/catalog-add-to-cart'
+    ], function ($) {
+        'use strict';
+
+        $('#product_addtocart_form').mage('validation', {
+            radioCheckboxClosest: '.nested',
+            submitHandler: function (form) {
+                var widget = $(form).catalogAddToCart({
+                    bindSubmit: false
+                });
+
+                widget.catalogAddToCart('submitForm', $(form));
+
+                return false;
+            }
+        });
+    });
+</script>
+<?php endif; ?>
+
+<?php } else { ?>
+
+
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Quantity') ?>" class="input-text qty"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button"> 
+                <span><i class="fa fa-shopping-cart"></i> <?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'Magento_Catalog/product/view/validation',
+        'Magento_Catalog/js/catalog-add-to-cart'
+    ], function ($) {
+        'use strict';
+
+        $('#product_addtocart_form').mage('validation', {
+            radioCheckboxClosest: '.nested',
+            submitHandler: function (form) {
+                var widget = $(form).catalogAddToCart({
+                    bindSubmit: false
+                });
+
+                widget.catalogAddToCart('submitForm', $(form));
+
+                return false;
+            }
+        });
+    });
+</script>
+<?php endif; ?>
+
+<?php } ?>
+<script>
+function openpopup()
+{
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Booking System ',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-mpdal'));
+
+            $('#popup-mpdal').modal('openModal');
+        }
+    );
+}
+function booking_add_to_cart($date,$day,$slot,$slotno,$customer_id,$product_id)
+{
+	require(['jquery', 'jquery/ui'], function($){
+	//alert();
+	$.ajax({
+                                showLoader: true,
+                                url: 'http://btranz.website/index.php/rest/V1/marketplace/bookingaddtocart/'+$product_id+'/1/'+$customer_id+'/'+$date+'/'+$day+'/'+$slot+'/'+$slotno,
+                                data: '',
+                                type: "GET",
+                                dataType: 'json'
+                            }).done(function (data) {  
+                               /*  $('#test').removeClass('hideme');
+                                var html = template('#test', {posts:data}); 
+                                $('#test').html(html); */
+								
+								//$(".loading-mask").show();
+								//$(".loading-mask").css("display", "block");
+								//alert(data);
+								
+								if(data=='success')
+								{
+									$("body").append('<div data-role="loader" class="loading-mask" style="display: block;"><div class="loader"><img src="http://btranz.website/pub/static/frontend/Venustheme/yume/en_US/images/loader-2.gif" alt="Loading..."><p>Please wait...</p></div></div>');
+									//alert("samiran1"); 
+									
+									minicart();
+									  setTimeout(function(){
+										 
+										window.location.assign("http://bookingservice.btranz.website/checkout/cart/");
+										//window.location.assign("http://bookingservice.btranz.website/checkout/");
+										//alert("samiran");  
+										 
+									 },10000);  
+									 
+								}  
+							
+                            });
+	 });
+}
+function minicart()
+{
+     require(['jquery'], function($){    
+    
+	                      $.ajax({
+                                //url: 'http://btranz.website/checkout/cart/updatePost',
+								url: 'http://bookingservice.btranz.website/checkout/cart/updatePost',
+								//url: 'checkout/cart/add',
+								//url: 'http://btranz.website/checkout/cart/updatePost',
+								 type: "POST",
+                                dataType: 'json'
+                            }).done(function (data) {  
+                               
+							
+                            });
+	
+	});
+}
+</script>

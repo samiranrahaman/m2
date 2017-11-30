@@ -1,0 +1,168 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Top menu for store
+ *
+ * @see \Magento\Theme\Block\Html\Topmenu
+ */
+?>
+<?php $columnsLimit = $block->getColumnsLimit() ?: 0; ?>
+<?php $_menu = $block->getHtml('level-top', 'submenu', $columnsLimit) ?>
+<?php 
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+	     $shop_url = $objectManager->create('Webkul\Marketplace\Helper\Data')->getProfileUrl(); 
+	   if(!$shop_url)
+		{    
+?>
+<nav class="navigation" role="navigation">
+    <ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+       
+	   <li class="level0 home level-top ">
+		  <a href="<?php echo $this->getBaseUrl(); ?>" class="level-top"><span>Home</span></a>
+		</li> 
+		<?php 
+		 $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$sql_config = "Select * FROM managemarketplace ";
+		$result_config = $connection->fetchAll($sql_config);
+		if($result_config[0]['categorymenu']==1):
+		?>
+	   <?php /* @escapeNotVerified */ echo $_menu; ?>
+	   <?php endif;?>
+	   <li class="level0 HOWITWORKS level-top ">
+		  <a href="<?php echo $this->getBaseUrl(); ?>how-it-works" class="level-top"><span>How It Works?</span></a>
+		</li> 
+		<li class="level0 HOWITWORKS level-top ">
+		  <a href="<?php echo $this->getBaseUrl(); ?>contact" class="level-top"><span>Contact</span></a>
+		</li> 
+	   
+    </ul>
+</nav>
+<?php } else { ?>
+
+<?php 
+
+							$x=explode("/",$_SERVER['REQUEST_URI']);
+							//print_r($x);
+							//echo $x[1];
+							$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+							
+							$data=$objectManager->create('Webkul\Marketplace\Model\Seller')
+									->getCollection()
+									->addFieldToFilter('shop_url',array('eq'=>$x[1]));
+									
+							if(!empty($data))
+							{ 
+?>
+
+									<nav class="navigation" role="navigation">
+									<ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+									   
+									   <li class="level0 home level-top ">
+										  <a href="<?php echo $this->getBaseUrl(); ?>" class="level-top"><span>Home</span></a>
+										</li> 
+										
+			
+										<?php
+										$parentCategory = '';
+										$arr_have_child_cat = [];
+										
+										$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+										$blockdata=$objectManager->create('Webkul\Marketplace\Block\Sellercategory');	
+									     $categorylist=$blockdata->getCategoryListcustom();
+										// print_r($categorylist); 
+											if(!empty($categorylist)):
+										foreach($blockdata->getCategoryListcustom() as $key => $value)
+										{ ?>
+												
+												<li class="level0 home level-top ">
+										  <a href="<?php echo $this->getBaseUrl(); ?><?php echo $x[1];?>/collection/?c=<?php echo $value['category_id'];?>" class="level-top"><span><?php echo $value['catname'];?></span></a>
+										</li> 
+										<?php 
+										} 
+										endif;
+										?>
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+										
+									   <li class="level0 reviews level-top ">
+									   <a class="store-name" href="<?php echo $block->getUrl(''); ?><?php echo $x[1];?>/review<?php //echo $objectManager->create('Webkul\Marketplace\Helper\Data')->getRewriteUrl('marketplace/seller/feedback/shop/'.$partner['shop_url'])?>">
+											<?php echo __('Reviews') ?>
+										</a>
+										</li>
+										<li class="level0 contact_us level-top ">
+										<a href="javascript:void(0)" class=" store-nameaskque"><?php echo __('Contact Us') ?></a>
+										</li>
+										
+										<?php
+										//if($helper->getSellerPolicyApproval()){
+											
+											?>
+											<li class="level0 return-policy level-top ">
+												<a class="store-name" href="<?php echo $block->getUrl(''); ?><?php echo $x[1].'#return-policy';?> <?php //echo $helper->getRewriteUrl('marketplace/seller/profile/shop/'.$partner['shop_url']).'#return-policy';?>">
+													<?php echo __('Return Policy') ?>
+												</a>
+											</li>
+											<li class="level0 shipping-policy level-top ">
+												<a class="store-name" href="<?php echo $block->getUrl(''); ?><?php echo $x[1].'#shipping-policy';?><?php //echo $helper->getRewriteUrl('marketplace/seller/profile/shop/'.$partner['shop_url']).'#shipping-policy';?>">
+													<?php echo __('Shipping Policy') ?>
+												</a>
+											</li>
+										<?php
+										//}
+										
+										?>
+										
+									   
+									</ul>
+								</nav> 
+							<?php } else { ?>
+							<nav class="navigation" role="navigation">
+									<ul data-mage-init='{"menu":{"responsive":true, "expanded":true, "position":{"my":"left top","at":"left bottom"}}}'>
+									   
+									   <li class="level0 home level-top ">
+										  <a href="<?php echo $this->getBaseUrl(); ?>" class="level-top"><span>Home</span></a>
+										</li> 
+										<?php 
+										 $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+										$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+										$connection = $resource->getConnection();
+										$sql_config = "Select * FROM managemarketplace ";
+										$result_config = $connection->fetchAll($sql_config);
+										if($result_config[0]['categorymenu']==1):
+										?>
+									   <?php /* @escapeNotVerified */ echo $_menu; ?>
+									   <?php endif;?>
+									   <li class="level0 HOWITWORKS level-top ">
+										  <a href="<?php echo $this->getBaseUrl(); ?>how-it-works" class="level-top"><span>How It Works?</span></a>
+										</li> 
+										<li class="level0 HOWITWORKS level-top ">
+										  <a href="<?php echo $this->getBaseUrl(); ?>contact" class="level-top"><span>Contact</span></a>
+										</li> 
+									   
+									</ul>
+								</nav>
+							<?php } ?>
+
+
+
+<?php } ?>

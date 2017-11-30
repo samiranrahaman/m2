@@ -1,0 +1,118 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Magento\Theme\Block\Html\Header\Logo $block
+ */
+?>
+
+
+ 
+<?php
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+	    $shop_url = $objectManager->create('Webkul\Marketplace\Helper\Data')->getProfileUrl();
+		
+		/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+		
+		if(!$shop_url){
+           echo $shop_url = $this->getRequest()->getParam('shop');            
+        }
+        if($shop_url){
+            $data=$objectManager->create('Webkul\Marketplace\Model\Seller')
+                    ->getCollection()
+                    ->addFieldToFilter('shop_url',array('eq'=>$shop_url));
+            foreach($data as $seller){ 
+			//return $seller;
+			 echo $logo=$seller->getLogoPic()!=''?$seller->getLogoPic():"noimage.png";
+			
+			}
+        } */
+		
+		
+		
+		
+		if(!$shop_url)
+		{
+			?>
+			<?php $storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();?>
+<span data-action="toggle-nav" class="action nav-toggle"><span><?php /* @escapeNotVerified */ echo __('Toggle Nav') ?></span></span>
+<?php if ($block->isHomePage()):?>
+    <strong class="logo">
+<?php else: ?>
+    <a class="logo custom" href="<?php echo $block->getUrl(''); ?>" title="<?php /* @escapeNotVerified */ echo $storeName ?>">
+<?php endif ?>
+        <img src="<?php /* @escapeNotVerified */ echo $block->getLogoSrc() ?>"
+             alt="<?php /* @escapeNotVerified */ echo $block->getLogoAlt() ?>"
+             <?php //echo $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+             <?php //echo $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+        />
+<?php if ($block->isHomePage()):?>
+    </strong>
+<?php else:?>
+    </a>
+<?php endif?>
+			
+			<?php
+		}
+		else
+		{
+			
+			//echo $_SERVER['REQUEST_URI'];
+			$x=explode("/",$_SERVER['REQUEST_URI']);
+			//echo $x[1];
+			$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+			
+			$data=$objectManager->create('Webkul\Marketplace\Model\Seller')
+                    ->getCollection()
+                    ->addFieldToFilter('shop_url',array('eq'=>$x[1]));
+            /*  foreach($data as $seller){ 
+			echo $logo=$seller->getLogoPic()!=''?$seller->getLogoPic():"noimage.png";
+			echo $MediaUrl=$objectManager->create('Webkul\Marketplace\Helper\Data')->getMediaUrl(); 
+			echo $logo1=$MediaUrl.'avatar/'.$logo; 
+			} */
+			if(!empty($data))
+			{
+			    foreach($data as $seller){ 
+				 $logo=$seller->getLogoPic()!=''?$seller->getLogoPic():"noimage.png";
+				 $MediaUrl=$objectManager->create('Webkul\Marketplace\Helper\Data')->getMediaUrl(); 
+				 $logo1=$MediaUrl.'avatar/'.$logo; 
+			     // echo $seller->getSellerId();
+				?>
+				          <a class="logo custom" href="<?php echo $block->getUrl(''); ?><?php echo $x[1];?>" title="Magento Commerce">
+								<img src="<?php echo $logo1;?>" alt="Magento Commerce">
+							</a>
+				<?php
+				}
+			}
+			else
+			{
+		
+			?>
+			           
+			<?php $storeName = $block->getThemeName() ? $block->getThemeName() : $block->getLogoAlt();?>
+			<span data-action="toggle-nav" class="action nav-toggle"><span><?php /* @escapeNotVerified */ echo __('Toggle Nav') ?></span></span>
+			<?php if ($block->isHomePage()):?>
+				<strong class="logo">
+			<?php else: ?>
+				<a class="logo custom" href="<?php echo $block->getUrl(''); ?>" title="<?php /* @escapeNotVerified */ echo $storeName ?>">
+			<?php endif ?>
+					<img src="<?php /* @escapeNotVerified */ echo $block->getLogoSrc() ?>"
+						 alt="<?php /* @escapeNotVerified */ echo $block->getLogoAlt() ?>"
+						 <?php //echo $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+						 <?php //echo $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+					/>
+			<?php if ($block->isHomePage()):?>
+				</strong>
+			<?php else:?>
+				</a>
+			<?php endif?>
+			
+			<?php
+		}
+	}
+?>

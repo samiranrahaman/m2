@@ -1,0 +1,9 @@
+ .page-main {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    width: auto;
+    max-width: 100% important;
+    box-sizing: border-box;
+}

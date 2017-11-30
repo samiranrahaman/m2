@@ -1,0 +1,274 @@
+.block-new-products .block-title {    
+    border-bottom: 1px solid #ccc;
+    padding: 8px 0;
+    text-transform: uppercase;
+	text-align: center;
+}  
+
+.logo img{
+	min-width: 216px;
+}
+.header.panel > .header.links > li a{
+	color:#000 !important;
+}
+/*featured Sellers*/
+.nested{
+	display:none;
+}	
+.productTubs{
+    box-sizing: border-box;
+    background-color: #FFF;
+    border: 1px solid #E1E3DF;
+    border-bottom-color: #CBCCC9;
+    margin: 0 0 12px;
+    padding: 6px;
+    overflow: hidden;
+
+}
+.productTubs figcaption{
+    padding: 3px 0;
+    text-align: center;
+    border-top: 1px solid rgba(249,115,102,1);
+    height: 60px
+}
+.productTubs:hover{
+    cursor: pointer;
+}
+.productTubs .productImage{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height:500px;
+    overflow: hidden;
+}
+ .productBox img{
+ 	padding: 10px;
+	height: 200px
+}
+.productBox img:hover{
+	transition: 0.2s;
+ 	transform: scale(1.01);
+}
+ .productBox{
+ 	text-align: center;
+ }
+ .productTubs figcaption span{
+    font-size: 16px;
+    font-weight: bold;
+    float: right;
+}
+.title{
+    font-weight: bold;
+    font-size: 18px
+}
+.productTubs li .title{
+   color: blue
+}
+.productHeader{
+	 padding: 10px 0;
+     border-bottom: 1px solid #ccc;
+}
+
+.productHeader .profile{
+	border:2px solid #ccc;
+	width:70%;
+}
+/****Category Boxes******/
+.categoryBOX{
+    margin-top: -20px;
+    text-align: center; 
+}
+
+.categoryBOX img{
+	width:100%;
+	max-width: 500px;
+	height:auto;
+	margin:0 auto;
+	border-radius:4px 4px 0 0
+}
+.categoryBOX .tub{
+	position: relative;
+	height:100%;
+	width:100%;
+	max-width: 500px;
+	margin:10px auto;
+}
+.tub::after {
+    content: "";
+	display: block;
+	border-radius: 4px 4px 0 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top:0;
+    padding-top: 10px;
+	background-color: rgba(6,6,6,0.8);
+}
+/*20.9.16*/
+
+.banner-content{
+	text-align: left;
+	padding: 10px;
+	color: #fff;
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	margin: 6% auto;
+	z-index: 50
+}
+.banner-content .banner-title{
+	font-size: 30px;
+	font-weight: bold;
+	line-height: 0.9;
+	border-bottom:1px solid #fff;
+    padding-bottom: 3px
+}
+.banner-content .banner-cat{
+	font-size: 24px;
+	font-weight: bold;
+	
+}
+.banner-content li{
+	display: block;
+	font-size: 14px;
+	margin:0;
+	padding-top:5px;
+}
+.banner-content li a{
+	color:#26abe3;	
+}
+.banner-content li a:hover{
+	cursor: pointer;
+	color:#66ff33;
+	text-decoration: underline;
+}
+.banner-content li:hover{
+	cursor: pointer;
+	color: #f05244;
+}
+.deals{
+	max-width:100%;
+	height:100%;
+}
+.searchByCat
+{
+	text-align: center;
+}
+.jumbotron button{
+	display: block;
+	margin:10px auto;
+}
+footer{	
+	margin-top:30px; 
+	padding-top:30px;  
+}
+footer li{
+	list-style: none;
+	display: block;
+	margin-top:10px
+}
+footer .content{
+	padding-bottom:30px;
+	margin-bottom:30px;   
+	border-bottom: 1px solid rgba(204,204,204,0.5);
+}
+footer ul {
+	border-bottom:none !important;
+}
+footer ul li{
+	float: left;
+    clear: left;
+}
+.bottomMost ul li{
+	float: none;
+}
+footer .bottomMost{
+	text-align: center;
+}
+footer .bottomMost li{
+    list-style: none;
+	display: inline-block;
+	padding:10px;
+	margin-top:10px 
+}
+.footer-top ul{
+	text-align:left;
+}
+.bottomMost ul{
+	text-align:center;
+}
+
+
+
+
+/*accordian*/
+#accordian_menu button.accordion {
+    background-color: #f85040;
+    color: #fff;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: 1px solid #ccc;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+/*Profile header*/
+.profile{
+    padding:5px;
+}
+.profile_pic{
+	float: left;
+	padding-bottom: 5px;
+}
+.profile_pic img{
+	border-radius: 4%;
+    width: 90px;
+    border: 1px solid;
+    margin-right: 15px;
+}
+/*Profile header*/
+.nav .item{
+	 border-bottom: 1px solid #ccc;
+}
+
+.page-title-wrapper {
+	border-bottom: 1px solid #ccc;
+}
+.dashboard .page-title{
+
+}
+.dashboard a{color: #1979c3;}
+#accordian_menu button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+#accordian_menu button.accordion:after {
+    content: '\02795';
+    font-size: 13px;
+    color: #fff;
+    float: right;
+    margin-left: 5px;
+}
+
+#accordian_menu button.accordion.active:after {
+    content: "\2796";
+}
+
+#accordian_menu div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.6s ease-in-out;
+    opacity: 0;
+}
+
+#accordian_menu div.panel.show {
+    opacity: 1;
+    max-height: 500px;  
+}

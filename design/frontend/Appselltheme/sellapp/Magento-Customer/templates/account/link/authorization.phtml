@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Customer\Block\Account\AuthorizationLink */
+$dataPostParam = '';
+if ($block->isLoggedIn()) {
+    $dataPostParam = sprintf(" data-post='%s'", $block->getPostParams());
+}
+//$partner=$helper->getSeller();
+//print_r($partner);
+?>
+<li class="authorization-link" data-label="<?php echo $block->escapeHtml(__('or')); ?>">
+    <a <?php /* @escapeNotVerified */ echo $block->getLinkAttributes(); ?><?php /* @escapeNotVerified */ echo $dataPostParam; ?>>
+        <?php echo $block->escapeHtml($block->getLabel()); ?>
+    </a>
+</li>
+<li><?php if($_SERVER['HTTP_HOST']=='btranz.website'){ ?>
+<a target="_blank" href="http://bookingservice.btranz.website/">Services </a>
+ <?php } else { ?>
+ <a target="_blank" href="http://btranz.website/">Products </a> 
+ <?php } ?>
+ </li> 

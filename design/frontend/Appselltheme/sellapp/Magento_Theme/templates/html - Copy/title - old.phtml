@@ -1,0 +1,114 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Magento\Theme\Block\Html\Title
+ */
+$cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
+$title = '';
+if (trim($block->getPageHeading())) {
+    $title = '<span class="base" data-ui-id="page-title-wrapper" ' .  $block->getAddBaseAttribute() . '>'
+        . $block->escapeHtml($block->getPageHeading()) . '</span>';
+}
+?>
+<?php if ($title): ?>
+<div class="page-title-wrapper<?php /* @escapeNotVerified */ echo $cssClass; ?>">
+    <h1 class="page-title"
+        <?php if ($block->getId()): ?> id="<?php /* @escapeNotVerified */ echo $block->getId();?>" <?php endif; ?>
+        <?php if ($block->getAddBaseAttributeAria()): ?>
+            aria-labelledby="<?php /* @escapeNotVerified */ echo $block->getAddBaseAttributeAria(); ?>"
+        <?php endif; ?>>
+        <?php /* @escapeNotVerified */ echo $title ?>
+    </h1>  
+    <?php echo $block->getChildHtml(); ?>
+</div>
+<?php endif; ?>
+<?php 
+//$helper = $this->helper('Webkul\Marketplace\Helper\Data'); 
+//$partner=$helper->getSeller(); 
+//print_r($partner); 
+ //$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+ //echo $shop_url = $objectManager->create('Webkul\Marketplace\Helper\Data')->getProfileUrl();
+ /* 
+ $data=$objectManager->create('Webkul\Marketplace\Model\Seller')
+                    ->getCollection()
+                    ->addFieldToFilter('shop_url',array('eq'=>$shop_url));  
+	print_r($data); */
+	
+/* if(!$shop_url){
+           // $shop_url = $this->getRequest()->getParam('shop');            
+        }
+        if($shop_url){
+            $data=$objectManager->create('Webkul\Marketplace\Model\Seller')
+                    ->getCollection()
+                    ->addFieldToFilter('shop_url',array('eq'=>$shop_url));
+            foreach($data as $seller){ print_r($seller); }
+        } */
+
+		
+	$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+     $shop_url = $objectManager->create('Webkul\Marketplace\Helper\Data')->getProfileUrl();	
+	
+		
+ $x=$block->getLayout()->getBlock('page.main.title')->getPageTitle();
+
+  if($x=='Marketplace Seller Profile') { 
+  
+?>
+ 
+ 
+ 
+<div class="profile-head">
+      <div class="profile-logo">
+      	   <img src="http://btranz.website/customimages/avatar5.png">
+      	   <span>
+      	   	  <p id="storeName">WEBSTORE</p>
+      	   	  <p id="location">India</p>
+      	   </span>
+      </div>
+      <ul class="profile-status">
+      	 <li id="items"><span>200</span> Total Items</li>
+      	 <li id="reviews"><span>2</span> Total Reviews</li>
+      </ul>
+	  <div class="profile-banner" style="background-image:url('http://btranz.website/customimages/banner.jpg');"></div>
+</div>
+  <?php } ?>
+ <?php   
+/* 
+$helper = $this->helper('Webkul\Marketplace\Helper\Data');
+$partner=$helper->getSeller();
+$logo=$partner['logo_pic'];
+$banner=$partner['banner_pic'];
+  $x=$block->getLayout()->getBlock('page.main.title')->getPageTitle();
+  if($x=='Marketplace Seller Profile') {     
+?>
+<div class="profile-head">
+      <div class="profile-logo">    
+      	 <!--  <img src="http://btranz.website/pub/media/avatar/<?php echo $logo;?>">-->
+		  <img src="http://btranz.website/customimages/avatar5.png">
+		 
+      	   <span>
+      	   	  <p id="storeName"><a class="store-name" href="<?php echo $helper->getRewriteUrl('marketplace/seller/profile/shop/'.$partner['shop_url']);?>"><?php echo $partner['shop_title'];?></a></p>
+      	   	  <!--<p id="location">India</p>-->
+			  <p class="wefrom">
+							<span class="wk-storeloc-icon wk-icon"></span>
+							<a target="_blank" href="http://btranz.website/samujeeb/location?loc=" title="Search" class="cont-name">
+								<span></span>
+								<img style="height:33px;width: 50px;" src="http://btranz.website/pub/static/frontend/Venustheme/yume/en_US/Webkul_Marketplace/images/country/countryflags/IN.png" title="View Map" class="piccountry">
+							</a>
+			</p>
+      	   </span>   
+      </div>
+      <ul class="profile-status">
+      	 <li id="items"><span>200</span> Total Items</li>
+      	 <li id="reviews"><span>2</span> Total Reviews</li>
+      </ul>
+	  <!--<div class="profile-banner" style="background-image:url('http://btranz.website/pub/media/avatar/<?php echo $banner;?>');"></div>-->
+      <div class="profile-banner" style="background-image:url('http://btranz.website/customimages/banner.jpg');"></div>
+</div>
+<?php } */ ?>

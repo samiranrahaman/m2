@@ -1,0 +1,710 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ 
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php 
+   $_product = $block->getProduct(); 
+   $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+   		$baseurl=$objectManager->get('Magento\Store\Model\StoreManagerInterface')
+            ->getStore(1)
+            ->getBaseUrl();
+   $product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
+   $product_id=$product->getId();
+   // echo $product->getName(); 
+   $poducttype=$product->getTypeId()
+	/* $category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');
+
+	echo $category->getId(); */
+	
+?>
+<?php if($poducttype=='customProductType') { ?>
+<style>
+/* calendar */
+table.calendar		{ border-left:1px solid #999; }
+tr.calendar-row	{  }
+td.calendar-day	{ min-height:80px; font-size:11px; position:relative; } * html div.calendar-day { height:80px; }
+td.calendar-day:hover	{ background:#eceff5; }
+td.calendar-day-np	{ background:#eee; min-height:80px; } * html div.calendar-day-np { height:80px; }
+td.calendar-day-head { background:#ff5501; font-weight:bold; text-align:center; width:120px; padding:5px; border-bottom:1px solid #999; border-top:1px solid #999; border-right:1px solid #999; }
+div.day-number		{ background:#999; padding:5px; color:#fff; font-weight:bold; float:right; margin:-5px -5px 0 0; width:20px; text-align:center; }
+/* shared */
+td.calendar-day, td.calendar-day-np { width:120px; padding:5px; border-bottom:1px solid #999; border-right:1px solid #999; }
+.booking_date_exist { 
+cursor: pointer;
+
+}
+/*.booking_calender_popup .action-close { display:none !important;}*/
+.calendar-day-head-row { 
+    background: none !important;
+    text-align: center !important;
+    color: #fff !important;
+    border-color: #365769 !important;
+}
+ .calendar-row .active {
+    background: #eceff5;
+}
+.booking_date_exist .day-number {   
+    
+    line-height: 46px;
+    
+    font-size: 13px;
+    border-radius: 26px;
+    border: 2px solid #31afea;
+    color: #000 !important;
+    
+    padding: 14px 19px 15px 17px;
+    
+}
+.booking_date_expired .day-number {   
+    
+    line-height: 46px;
+    
+    font-size: 13px;
+    border-radius: 26px;
+    border: 2px solid #e12359;
+    color: #000 !important;
+    
+    padding: 14px 19px 15px 17px;
+    
+}
+ .day-number:hover{ background:#ff5501; }
+  #booking_calender .calendar-row td{ text-align:center; border-bottom: white;}
+  
+ #booking_calender {
+	     margin-top: 0px;
+    line-height: 39px;
+    padding: 0px;
+  }
+  .booked-appt-list {     color: #000;
+    background: #fff;
+    transform: scale(0.95);
+    padding: 30px 35px 10px;
+    display: none;
+    -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.20);
+    -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.20);
+    box-shadow: 0 1px 5px rgba(0,0,0,0.20);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    display: block;}
+	
+	.timeslot {
+		    box-sizing: border-box;
+    line-height: 1.8;
+    color: #888;
+    border-top: 1px solid #ddd;
+	padding: 17px 6px 17px 5px;
+
+	}
+	.timeslot-time {
+		/*float: left;
+		padding-left: 15px;*/
+	}
+	.timeslot-people button
+	{
+		float: right;
+    
+	}
+</style>
+
+<?php $buttonTitle = __('Book Now'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+	<?php //echo $block->getText(); ?>
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty" style="display:none;" >
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Quantity') ?>" class="input-text qty"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+		
+		 <!-- Trigger the modal with a button -->
+ 
+	
+		
+        <div class="actions">
+		<?php 
+		
+		
+		
+		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $customerSession = $objectManager->create('Magento\Customer\Model\Session');  
+	
+       $customer_id='';
+		if($customerSession->isLoggedIn())
+	{
+		//if ($block->getText()){
+	     $customer_id=$customerSession->getCustomerId(); 
+		// $customer_id=$block->getText(); 
+		
+   ?>
+  <!-- Modal -->
+<!--<div class="divs">
+     <div class="cls1"><h1>1</h1><table cellpadding="0" cellspacing="0" class="calendar"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day"><div class="day-number">1</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">2</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">3</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">4</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">5</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">6</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">7</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">8</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">9</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">10</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">11</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">12</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">13</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">14</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">15</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">16</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">17</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">18</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">19</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">20</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">21</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">22</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">23</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">24</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">25</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">26</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">27</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">28</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">29</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">30</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">31</div><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div>
+     <div class="cls2"><h1>2</h1><table cellpadding="0" cellspacing="0" class="calendar"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day"><div class="day-number">1</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">2</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">3</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">4</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">5</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">6</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">7</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">8</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">9</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">10</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">11</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">12</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">13</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">14</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">15</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">16</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">17</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">18</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">19</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">20</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">21</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">22</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">23</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">24</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">25</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">26</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">27</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">28</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">29</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">30</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">31</div><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div>
+     <div class="cls3"><h1>3</h1>3</div>
+     <div class="cls4">4</div>
+     <div class="cls5"><table cellpadding="0" cellspacing="0" class="calendar"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day"><div class="day-number">1</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">2</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">3</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">4</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">5</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">6</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">7</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">8</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">9</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">10</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">11</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">12</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">13</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">14</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">15</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">16</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">17</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">18</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">19</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">20</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">21</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">22</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">23</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">24</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">25</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">26</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">27</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">28</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">29</div><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day"><div class="day-number">30</div><p> </p><p> </p></td><td class="calendar-day"><div class="day-number">31</div><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div>
+     <div class="cls6">6</div>
+     <div class="cls7">7</div>
+ </div>
+ <a id="next">next</a>
+ <a id="prev">prev</a>-->
+<!--
+ <table id="addrow" cellpadding="0" cellspacing="0" class="calendar" id="addrow"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr data-empid="B456" data-salary="120" class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">1</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">2</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">3</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">4</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">5</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">6</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">7</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">8</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">9</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">10</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">11</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">12</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">13</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">14</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">15</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">16</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">17</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">18</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">19</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">20</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">21</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">22</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">23</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">24</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">25</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">26</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">27</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">28</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">29</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">30</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">31</span><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table>
+-->
+<!--<div class="divs" id="calender_main_div"> <div class="cls1" id="calender_main_divinner1"><h2>10 2016</h2><table cellpadding="0" cellspacing="0" class="calendar" id="addrow"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr data-empid="B456" data-salary="120" class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">1</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">2</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">3</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">4</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">5</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">6</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">7</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">8</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">9</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">10</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">11</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">12</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">13</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">14</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">15</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">16</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">17</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">18</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">19</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">20</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">21</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">22</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">23</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">24</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">25</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">26</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">27</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">28</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">29</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">30</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">31</span><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div> <div class="cls2" style="display: none;" id="calender_main_divinner2"><h2>11 2016</h2><table cellpadding="0" cellspacing="0" class="calendar" id="addrow"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr data-empid="B456" data-salary="120" class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">1</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">2</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">3</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">4</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">5</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">6</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">7</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">8</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">9</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">10</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">11</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">12</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">13</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">14</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">15</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">16</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">17</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">18</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">19</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">20</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">21</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">22</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">23</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">24</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">25</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">26</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">27</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">28</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">29</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">30</span><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div> <div class="cls3" style="display: none;" id="calender_main_divinner3"><h2>12 2016</h2><table cellpadding="0" cellspacing="0" class="calendar" id="addrow"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr data-empid="B456" data-salary="120" class="calendar-row"><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">1</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">2</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">3</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">4</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">5</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">6</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">7</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">8</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">9</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">10</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">11</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">12</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">13</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">14</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">15</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">16</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">17</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">18</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">19</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">20</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">21</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">22</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">23</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">24</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">25</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">26</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">27</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">28</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">29</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">30</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">31</span><p> </p><p> </p></td></tr><tr><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div> <div class="cls4" style="display: none;" id="calender_main_divinner4"><h2>01 2017</h2><table cellpadding="0" cellspacing="0" class="calendar" id="addrow"><tbody><tr class="calendar-row"><td class="calendar-day-head">Sunday</td><td class="calendar-day-head">Monday</td><td class="calendar-day-head">Tuesday</td><td class="calendar-day-head">Wednesday</td><td class="calendar-day-head">Thursday</td><td class="calendar-day-head">Friday</td><td class="calendar-day-head">Saturday</td></tr><tr data-empid="B456" data-salary="120" class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">1</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">2</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">3</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">4</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">5</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">6</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">7</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">8</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">9</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">10</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">11</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">12</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">13</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">14</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">15</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">16</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">17</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">18</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">19</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">20</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">21</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">22</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">23</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">24</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">25</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">26</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">27</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">28</span><p> </p><p> </p></td></tr><tr class="calendar-row"><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">29</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">30</span><p> </p><p> </p></td><td class="calendar-day" onclick="showbookingslot();"><span class="day-number">31</span><p> </p><p> </p></td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td><td class="calendar-day-np"> </td></tr></tbody></table></div></div>
+-->
+<div id="popup-mpdal2" class="modal fade customer_<?php echo $customer_id;?> booking_confirm_calender_popup " role="dialog" style="display:none;"> 
+<div id="booking_confirm_booking">
+	<!--<div>
+	<h5>You are about to request an appointment for administrator. Please review and confirm that you would like to request the following appointment: <h5>
+	<div class="timeslot bookedClearFix" style="padding: 21px 3px 82px 8px;">
+	                                                <h3>
+													<i class="fa fa-clock-o" aria-hidden="true"></i>
+													 02:00 pm – 04:10 pm 
+													</h3>
+	</div>
+	<div>
+	<span><button type="button" onclick="booking_add_to_cart();">Book</button></span><span></span></div>
+	</div>-->
+</div>
+</div>
+<div id="popup-mpdal" class="modal fade customer_<?php echo $customer_id;?> booking_calender_popup " role="dialog" style="display:none;"> 
+<div id="booking_calender">
+<!--<div class="divs">
+     <div class="cls1">1</div>
+     <div class="cls2">2</div>
+     <div class="cls3">3</div>
+     <div class="cls4">4</div>
+     <div class="cls5">5</div>
+     <div class="cls6">6</div>
+     <div class="cls7">7</div>
+ </div>
+ <a id="next">next</a>
+ <a id="prev">prev</a>
+-->
+</div>
+<!--<table>-->
+<?php 
+		/* $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); // Instance of object manager
+		$resource = $objectManager->get('Magento\Framework\App\ResourceConnection');
+		$connection = $resource->getConnection();
+		$quote_sql = "Select * FROM  sr_booking_timing where product_id=$product_id limit 1";
+		$result_schedule = $connection->fetchAll($quote_sql);
+		if(!empty($result_schedule))
+		{
+			 
+			 $startdate=$result_schedule[0]['startdate'];
+			 $enddate=$result_schedule[0]['enddate'];
+			
+			$dates = array();
+			$startdate = strtotime($startdate);
+			$enddate = strtotime($enddate);
+           $step = '+1 day';
+		   $output_format = 'm/d/Y';
+			while( $startdate <= $enddate ) {
+
+				$dates[] = date($output_format, $startdate);
+				$startdate = strtotime($step, $startdate);
+			}
+			//print_r($dates);
+			
+            //var_dump($day);
+			$bookingschedule='';
+			foreach($dates as $kk=>$value1)
+			{
+				//echo $value1;
+				$value2=str_replace("/","-",$value1);
+			$timestamp = strtotime($value1);
+			$day = date('l', $timestamp);
+			//echo"</br>";
+			
+			$quote_sql2 = "Select * FROM  sr_booking_timing where product_id=$product_id and weekday='$day' limit 1";
+		    $result_schedule2 = $connection->fetchAll($quote_sql2);
+			if(!empty($result_schedule2)):
+			foreach($result_schedule2 as $val_sh)
+			{
+				$slottime=$val_sh['starthoure'].':'.$val_sh['startminute'].'-'.$val_sh['endhoure'].':'.$val_sh['endminute'];
+			//	$bookingschedule.='<tr><td>'.$value1.'</td><td>'.$day.'</td><td>'.$val_sh['starthoure'].':'.$val_sh['startminute'].'-'.$val_sh['endhoure'].':'.$val_sh['endminute'].'</td><td><input type="text" name="" value="1" width="50px" /></td><td><button type="button" onclick="booking_add_to_cart();">Book</button></td></tr>';
+			$bookingschedule.='<tr><td>'.$value1.'</td><td>'.$day.'</td><td>'.$val_sh['starthoure'].':'.$val_sh['startminute'].'-'.$val_sh['endhoure'].':'.$val_sh['endminute'].'</td><td><button type="button" onclick="booking_add_to_cart(\''.$value2.'\',\''.$day.'\',\''.$slottime.'\',1,'.$customer_id.','.$product_id.');">Book</button></td></tr>';
+			}
+			endif;
+			
+			
+			}
+			
+		} */
+?>
+<!--<tr><th>Date</th><th>Day</th><th>Slot Time</th><th></th></tr>
+<?php //echo $bookingschedule;?>
+</table>-->
+</div>
+		
+	
+   
+    <button type="button" onclick="openpopup();"
+								title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+								class="action primary tocart"
+								id="product-addtocart-button"> 
+							<span><i class="fa fa-shopping-cart"></i> <?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+			</button>
+			
+   <?php
+}else{
+    ?>
+	<a title="Add to Cart" class="action primary tocart" 
+			href="http://159.203.151.92/customer/account/login/">
+			Please Login To View Price</a>
+	<?php
+} 
+
+   ?>
+ 
+  
+	  <!-- <a title="Add to Cart" class="action primary tocart" 
+			href="http://btranz.website/customer/account/login/">
+			Please Login To View Price</a>-->
+	
+            <!--<button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button"> 
+                <span><i class="fa fa-shopping-cart"></i> <?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>-->
+			
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'Magento_Catalog/product/view/validation',
+        'Magento_Catalog/js/catalog-add-to-cart'
+    ], function ($) {
+        /* 'use strict';
+
+        $('#product_addtocart_form').mage('validation', {
+            radioCheckboxClosest: '.nested',
+            submitHandler: function (form) {
+                var widget = $(form).catalogAddToCart({
+                    bindSubmit: false
+                });
+
+                widget.catalogAddToCart('submitForm', $(form));
+
+                return false;
+            }
+        }); */
+		
+		
+		
+		
+    });
+</script>
+<?php endif; ?>
+
+
+
+<script>
+function confirmbooking_popup($date,$day,$slot,$slotno,$product_id,$stime,$endtime)
+{
+	//alert('index.php/rest/V1/marketplace/bookingform/<?php echo $customer_id; ?>/'+$product_id+'/'+$date+'/'+$slot+'/'+$stime+'/'+$endtime);
+	require(  
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: false,
+                title: 'Request an Appointment',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    } 
+                }]
+            };
+          // alert();
+            var popup = modal(options, $('#popup-mpdal2'));
+            // $('#popup-mpdal2').modal('openModal');
+			// $("#booking_confirm_booking").html('<div><h5>Confirm booking<h5><div></div><div><span><button type="button" onclick="booking_add_to_cart();">Book</button></span><span></span></div></div>');
+		     //$(".modal-footer").remove();
+		     //$("#booking_calender").append('<div data-role="loader" class="loading-mask" style="display: block;"><div class="loader"><img src="<?php echo $baseurl; ?>pub/static/frontend/Venustheme/yume/en_US/images/loader-2.gif" alt="Loading..."><p>Please wait...</p></div></div>');
+									
+		                  $.ajax({
+                                showLoader: true,
+                                 url: '<?php echo $baseurl; ?>index.php/rest/V1/marketplace/bookingform/<?php echo $customer_id; ?>/'+$product_id+'/'+$date+'/'+$slot+'/'+$stime+'/'+$endtime, 
+                                 data: '',
+                                 type: "GET",
+                                 dataType: 'json'
+                             }).done(function (data) {    
+                               //alert(data);
+							  $("#booking_confirm_booking").html(data);
+							 $(".modal-footer").remove();
+							  $('#popup-mpdal2').modal('openModal');
+							  
+							  /*  $(this).find('.modal-inner-wrap').css({
+										  width:'30%', //probably not needed
+										  height:'auto', //probably not needed 
+										  'max-height':'100%'
+								   }); */ 
+								   //$('.modal-inner-wrap').css("width", "30%");
+								  // $(this).find('.modal-inner-wrap').css("width", "30%");
+								  //alert($("#popup-mpdal2").closest("div").porp("id"))  
+								  $("#popup-mpdal2").parent().addClass("samiran_popup_mpdal");
+								  $(".samiran_popup_mpdal").parent().addClass("samiran_popup_mpdal2");
+								  $('.samiran_popup_mpdal2').css("width", "37%");
+								  $('.samiran_popup_mpdal2 .modal-header').css({"background-color":"#ff5501","color":"white","font-size": "34px","font-weight": "inherit"});
+								  $('.samiran_popup_mpdal2 .modal-title').css("border-bottom", "none !important");
+					              $('.samiran_popup_mpdal2 .action-close').css({"background-color":"white","height": "15px","width": "8px"});
+								  			  
+								  
+								 
+                             }); 
+		   
+		   
+		   
+           // $('#popup-mpdal').modal('openModal');
+        }
+    );
+}
+function openpopup()
+{
+	
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: false,
+                title: '',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-mpdal'));
+           
+		     //$(".modal-footer").remove();
+		     //$("#booking_calender").append('<div data-role="loader" class="loading-mask" style="display: block;"><div class="loader"><img src="<?php echo $baseurl; ?>pub/static/frontend/Venustheme/yume/en_US/images/loader-2.gif" alt="Loading..."><p>Please wait...</p></div></div>');
+									
+		                  $.ajax({
+                                showLoader: true,
+                                 url: '<?php echo $baseurl; ?>index.php/rest/V1/marketplace/bookingcalender/<?php echo $product_id; ?>',
+                                 data: '',
+                                 type: "GET",
+                                 dataType: 'json'
+                             }).done(function (data) {    
+                               //alert(data);
+							  $("#booking_calender").html(data);
+							 // $(".modal-footer").remove();
+							  $('#popup-mpdal').modal('openModal');
+                             });
+		   
+		   
+		   
+           // $('#popup-mpdal').modal('openModal');
+        }
+    );
+}
+function booking_add_to_cart($date,$day,$slot,$slotno,$customer_id,$product_id)
+{
+	require(['jquery', 'jquery/ui'], function($){
+	//alert('<?php echo $baseurl; ?>index.php/rest/V1/marketplace/bookingaddtocart/'+$product_id+'/1/'+$customer_id+'/'+$date+'/'+$day+'/'+$slot+'/'+$slotno);
+	$.ajax({
+                                showLoader: true,
+                                url: '<?php echo $baseurl; ?>index.php/rest/V1/marketplace/bookingaddtocart/'+$product_id+'/1/'+$customer_id+'/'+$date+'/'+$day+'/'+$slot+'/'+$slotno,
+                                data: '',
+                                type: "GET",
+                                dataType: 'json'
+                            }).done(function (data) {  
+                               /*  $('#test').removeClass('hideme');
+                                var html = template('#test', {posts:data}); 
+                                $('#test').html(html); */
+								
+								//$(".loading-mask").show();
+								//$(".loading-mask").css("display", "block");
+								//alert(data);
+								
+								if(data=='success')
+								{
+									$("body").append('<div data-role="loader" class="loading-mask" style="display: block;"><div class="loader"><img src="<?php echo $baseurl; ?>pub/static/frontend/Venustheme/yume/en_US/images/loader-2.gif" alt="Loading..."><p>Please wait...</p></div></div>');
+									minicart();
+									   setTimeout(function(){
+										 
+										//window.location.assign("http://159.203.151.92/checkout/cart/");
+										window.location.assign("http://159.203.151.92/checkout/");
+										
+										 
+									 },10000);   
+									 
+								}  
+							
+                            });
+	 });
+}
+function minicart()
+{
+     require(['jquery'], function($){    
+    
+	                      $.ajax({
+                                //url: '<?php echo $baseurl; ?>checkout/cart/updatePost',
+								url: 'http://159.203.151.92/checkout/cart/updatePost',
+								//url: 'checkout/cart/add',
+								//url: '<?php echo $baseurl; ?>checkout/cart/updatePost',
+								 type: "POST",
+                                dataType: 'json'
+                            }).done(function (data) {  
+                               
+							
+                            });
+	
+	});
+}
+ function nextfunction()
+{
+     require(['jquery'], function($){   
+        //alert($(".divs div:visible").next().length);	 
+    if ($(".divs div:visible").next().length != 0)
+            $(".divs div:visible").next().show().prev().hide();
+        else {
+            $(".divs div:visible").hide();
+            $(".divs div:first").show();
+        }
+	
+	}); 
+	
+	return false;
+}
+function prevfunction()
+{
+      require(['jquery'], function($){    
+          if ($(".divs div:visible").prev().length != 0)
+            $(".divs div:visible").prev().show().next().hide();
+        else {
+            $(".divs div:visible").hide();
+            $(".divs div:last").show();
+        }
+	
+	}); 
+	
+	return false;
+}
+
+ function showbookingslot(e,$product_id,$day,$month,$list_day,$year)  
+{  
+//alert($product_id);
+//alert($day);
+//alert($month);
+//alert($list_day);
+//alert('http://btranz.website/index.php/rest/V1/marketplace/availableappointment/'+$product_id+'/'+$day+'/'+$month+'/'+$list_day+'/'+$year);
+     require(['jquery'], function($) 
+	 {    
+	        if($(".entryBlock").length>0)
+					{
+						$(".entryBlock").remove();
+					}
+			   if($(".calendar-row .active").length>0)
+					{
+						$(".calendar-row td").removeClass('active');
+					}
+				$(e).closest('tr').after('<tr class="entryBlock loading" style="background-color: #eceff5;"><td style="text-align: center;"colspan="7"><div data-role="loader" class="" style="display: block;"><div class="loader"><img src="<?php echo $baseurl; ?>pub/static/frontend/Venustheme/yume/en_US/images/loader-2.gif" alt="Loading..."></div></div></td></tr>');
+	            //$(e).closest('tr').after('<tr class="entryBlock loading" style="background-color: #eceff5;"><td colspan="7"><div class="booked-appt-list shown" style="display: block;"><h2><span>Available Appointments on </span><strong>December 9, 2016</strong><span></span></h2><div class="timeslot bookedClearFix"><span class="timeslot-time"><span class="timeslot-range"><i class="fa fa-clock-o" aria-hidden="true"></i><h3>&nbsp;&nbsp;8:00 am – 9:00 am<h3></span><p><span class="spots-available">5 spaces available</span></p></span><span class="timeslot-people"><button data-calendar-id="0" data-title="" data-timeslot="0800-0900" data-date="2016-12-9" class="new-appt button"><span class="button-timeslot">8:00 am – 9:00 am</span><span class="button-text">Book Appointment</span></button></span></div><div class="timeslot bookedClearFix"><span class="timeslot-time"><span class="timeslot-range"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;&nbsp;9:00 am – 10:00 am</span><span class="spots-available">5 spaces available</span></span><span class="timeslot-people"><button data-calendar-id="0" data-title="" data-timeslot="0900-1000" data-date="2016-12-9" class="new-appt button"><span class="button-timeslot">9:00 am – 10:00 am</span><span class="button-text">Book Appointment</span></button></span></div></td></tr>');
+				
+				
+				           $.ajax({
+                                //url: '<?php echo $baseurl; ?>checkout/cart/updatePost',
+								//url: 'http://btranz.website/index.php/rest/V1/marketplace/availableappointment/36/Monday/10/7/2016',
+								url: '<?php echo $baseurl; ?>index.php/rest/V1/marketplace/availableappointment/'+$product_id+'/'+$day+'/'+$month+'/'+$list_day+'/'+$year,
+								data: '',
+                                type: "GET",
+                                dataType: 'json'
+                            }).done(function (data) {  
+                               
+							//$(e).closest('tr').after(data);
+							$(".entryBlock").html(data);
+                            });
+				
+				
+				
+				$(e).addClass('active');
+	});
+} 
+   //require(['jquery'], function($){ 
+			/*   $(".divs div").each(function(e) {
+				if (e != 0)
+					$(this).hide();
+			});  
+
+			$("#next").click(function(){
+				alert($(".divs div:visible").next().length);
+				if ($(".divs div:visible").next().length != 0)
+					$(".divs div:visible").next().show().prev().hide();
+				else {
+					$(".divs div:visible").hide();
+					$(".divs div:first").show();
+				}
+				return false;
+			});
+
+			$("#prev").click(function(){
+				alert();
+				if ($(".divs div:visible").prev().length != 0)
+					$(".divs div:visible").prev().show().next().hide();
+				else {
+					$(".divs div:visible").hide();
+					$(".divs div:last").show();
+				}
+				return false;
+			}); */
+			/* $('#addrow a').live('click', function(){
+			  var $this     = $(this),
+				  $parentTR = $this.closest('tr');
+
+			  $parentTR.clone().insertAfter($parentTR);
+			}); */
+			/* $('#addrow .calendar-day').bind('click', function () {
+				alert();
+				$(this).closest('tr').after('<tr><td>new td<td></tr>');
+			}); */
+			/* $('.day-number').live('click', function(){
+				alert();
+                var $this     = $(this);
+                   $parentTR = $this.closest('tr');
+                $parentTR.clone().insertAfter($parentTR);
+                 }); */
+    // }); 
+</script>
+
+
+
+
+
+
+
+
+
+
+<?php } else { ?>
+
+
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php if ($_product->isSaleable()): ?>
+<div class="box-tocart">
+    <div class="fieldset">
+        <?php if ($block->shouldRenderQuantity()): ?>
+        <div class="field qty">
+            <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+            <div class="control">
+                <input type="number"
+                       name="qty"
+                       id="qty"
+                       maxlength="12"
+                       value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php /* @escapeNotVerified */ echo __('Quantity') ?>" class="input-text qty"
+                       data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       />
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="actions">
+            <button type="submit"
+                    title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+                    class="action primary tocart"
+                    id="product-addtocart-button"> 
+                <span><i class="fa fa-shopping-cart"></i> <?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </button>
+            <?php echo $block->getChildHtml('', true) ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+<script>
+    require([
+        'jquery',
+        'mage/mage',
+        'Magento_Catalog/product/view/validation',
+        'Magento_Catalog/js/catalog-add-to-cart'
+    ], function ($) {
+        'use strict';
+
+        $('#product_addtocart_form').mage('validation', {
+            radioCheckboxClosest: '.nested',
+            submitHandler: function (form) {
+                var widget = $(form).catalogAddToCart({
+                    bindSubmit: false
+                });
+
+                widget.catalogAddToCart('submitForm', $(form));
+
+                return false;
+            }
+        });
+		
+		
+		
+    });
+</script>
+<?php endif; ?>
+
+<?php } ?>
